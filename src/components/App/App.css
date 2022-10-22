@@ -3,6 +3,7 @@
   min-height: 100vh;
   min-width: 320px;
   width: 100%;
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   text-rendering: optimizeLegibility;
+  flex-direction: column;
 }
