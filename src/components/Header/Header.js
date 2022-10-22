@@ -3,16 +3,16 @@ import "./Header.css";
 import logo from "../../images/logo-movies-explorer-blue.svg";
 import Navigation from "../Navigation/Navigation";
 
-function Header() {
+function Header({ loggedIn }) {
   return (
     <header className="header">
       <div className="header__top-bar">      
         <Link to="/">
           <img className="header__logo" src={logo} alt="логотип" />
         </Link>
-        
-        <nav className="header__navbar">  
-        {/* <Navigation />  */}
+        <>
+      {!loggedIn ? (
+        <nav className="header__navbar">        
           <ul className="header__navbar-list">
             <li>
               <Link to="/signup" className="header__navbar-link">
@@ -28,7 +28,11 @@ function Header() {
               </Link>
             </li>
           </ul>          
-        </nav>        
+        </nav> 
+) : (
+<Navigation />
+)}
+        </>       
       </div>      
     </header>
   );

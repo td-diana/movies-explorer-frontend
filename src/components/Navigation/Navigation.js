@@ -5,10 +5,12 @@ function Navigation() {
   return (
      
     <nav className="navigation">
+        {/* убрать после логики */}
         <div className="header__top-bar">
         <Link to="/">
           <img className="header__logo" alt="логотип" />
         </Link>
+        
       <ul className="navigation__list">
         <li className="navigation__item">
           <Link to="/movies" className="navigation__link">
