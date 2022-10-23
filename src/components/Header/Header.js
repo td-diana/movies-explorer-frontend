@@ -7,8 +7,8 @@ function Header({ loggedIn }) {
   return (
     <header className="header">
       <div className="header__top-bar">      
-        <Link to="/">
-          <img className="header__logo" src={logo} alt="логотип" />
+        <Link to="/" className="header__logo">
+          <img src={logo} alt="логотип" />
         </Link>
         <>
       {!loggedIn ? (

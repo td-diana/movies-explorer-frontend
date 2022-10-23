@@ -2,15 +2,8 @@ import { Link } from "react-router-dom";
 import "./Navigation.css";
 
 function Navigation() {
-  return (
-     
-    <nav className="navigation">
-        {/* убрать после логики */}
-        <div className="header__top-bar">
-        <Link to="/">
-          <img className="header__logo" alt="логотип" />
-        </Link>
-        
+  return (     
+    <nav className="navigation">        
       <ul className="navigation__list">
         <li className="navigation__item">
           <Link to="/movies" className="navigation__link">
@@ -26,10 +19,8 @@ function Navigation() {
           <Link to="/profile" className="navigation__link navigation__link-account">
             Аккаунт
           </Link>
-        </li>
-        
-      </ul>
-      </div>
+        </li>        
+      </ul>      
     </nav>
   );
 }

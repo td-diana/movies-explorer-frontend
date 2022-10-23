@@ -1,13 +1,17 @@
 .header {
   display: flex;
   width: 100%;
-  background-color: #dddee3;
+  background-color: #dddee3;  
+  flex-direction: column;
+  align-items: center;
 }
 .header__top-bar {
   max-width: 1280px;
   width: 100%;
   height: 74px;
-  padding: 18px 70px;
+  /* padding: 18px 70px; */
+  padding: 0;
+  margin: 0 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
