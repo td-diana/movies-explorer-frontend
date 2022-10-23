@@ -3,7 +3,7 @@ import "./Promo.css";
 
 function Promo() {
   return (
-    <div className="promo">        
+    <section className="promo">        
       <div className="promo__container">      
         <h1 className="promo__title">
           Учебный проект студента факультета Веб-разработки.
@@ -28,7 +28,7 @@ function Promo() {
         </li>        
       </ul> 
         </nav>      
-      </div>  
+      </section>  
 
   );
 }
