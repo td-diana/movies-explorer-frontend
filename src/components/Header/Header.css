@@ -55,3 +55,12 @@
   color: #fff;
   padding: 8px 20px;
 } */
+
+
+.header_theme_nologged {
+  background-color: #dddee3;
+}
+
+.header_theme_logged {
+  background-color: #fff;
+}

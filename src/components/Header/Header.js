@@ -3,9 +3,10 @@ import "./Header.css";
 import logo from "../../images/logo-movies-explorer-blue.svg";
 import Navigation from "../Navigation/Navigation";
 
-function Header({ LoggeIn}) {
+function Header({ LoggeIn, theme}) {
   return (
-    <header className="header">
+    <header className={`header header_theme_${theme ? 'logged' : 'nologged'}`}>
+  
       <div className="header__container">
         <Link to="/" className="header__logo">
           <img src={logo} alt="логотип" />

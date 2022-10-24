@@ -7,7 +7,7 @@
 .search-form {
     max-width: 1280px;
     width: 100%;
-    padding: 60px 70px 41px;
+    padding: 60px 70px 0px;
     display: flex;
     align-items: center;
     flex-direction: column;   
@@ -44,5 +44,5 @@
 
 .search-form__input::placeholder {
   color: #a0a0a0;
-  padding-left: 20px;
+  /* padding-left: 20px; */
 }

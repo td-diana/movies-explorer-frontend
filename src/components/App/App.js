@@ -13,12 +13,12 @@ function App() {
         <Route
           exact
           path="/"
-          element={[<Header LoggeIn={false} />, <Main LoggeIn={false} />]}
+          element={[<Header LoggeIn={false} theme={false} />, <Main LoggeIn={false} />]}
         />
 
         <Route
           path="/movies"
-          element={[<Header LoggeIn={true} />, <Movies LoggeIn={true} />]}
+          element={[<Header LoggeIn={true} theme={true} />, <Movies LoggeIn={true} />]}
         />
       </Routes>
       {/* <Main /> */}
