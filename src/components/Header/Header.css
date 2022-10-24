@@ -1,20 +1,22 @@
 .header {
   display: flex;
   width: 100%;
-  background-color: #dddee3;
+  justify-content: space-around;
+  /* background-color: #dddee3;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
 }
-.header__top-bar {
+
+.header__container {
   max-width: 1280px;
   width: 100%;
-  height: 74px;
-  /* padding: 18px 70px; */
-  padding: 0;
-  margin: 0 70px;
+  padding: 18px 70px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* height: 74px; */
+  /* padding: 0;
+  margin: 0 70px; */
+  /* align-items: center; */
 }
 
 .header__logo {
@@ -22,7 +24,7 @@
   height: 38px;
 }
 
-.header__navbar {
+/* .header__navbar {
   display: flex;
 }
 
@@ -52,4 +54,4 @@
   border-radius: 3px;
   color: #fff;
   padding: 8px 20px;
-}
+} */

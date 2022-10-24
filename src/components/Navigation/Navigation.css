@@ -1,20 +1,31 @@
 .navigation {
   display: flex;
-  width: 100%;
+  /* flex-direction: column;
+  width: 100%; */
   align-items: center;
-  background-color: #fff;
+  /* background-color: #dddee3; */
+  /* background-color: #fff; */
 }
 
 .navigation__list {
   display: flex;
+  align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 16px;
+  gap: 30px;
   align-items: center;
 }
 
-.navigation__item {
+.navigation__list-loggedin {
+  gap: 20px;
+}
+
+.navigation__link-signin {
+  background-color: #3456f3;
+  border-radius: 3px;
+  color: #fff;
+  padding: 8px 20px;
 }
 
 .navigation__link {
@@ -25,7 +36,7 @@
   display: flex;
   align-items: center;
   text-align: right;
-  color: #000000;
+  /* color: #000000; */
   text-decoration: none;
 }
 
@@ -43,7 +54,7 @@
   padding-left: 11px;
   padding-right: 36px;
   margin-left: 364px;
-  margin-right: 70px;
+  /* margin-right: 70px; */
 }
 
 .navigation__link-account::after {
