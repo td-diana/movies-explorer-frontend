@@ -1,4 +1,4 @@
-.register {
+.login {
   /* max-width: 1280px; */
   width: 100%;
   display: flex;
@@ -8,7 +8,7 @@
   padding: 70px 0px;
 }
 
-.register__form {
+.login__form {
   width: 100%;
   max-width: 396px;
   min-height: 525px;
@@ -18,21 +18,21 @@
   position: relative;
 }
 
-.register__title {
+.login__title {
   font-weight: 500;
   font-size: 24px;
   line-height: 1.29;
   margin: 0;
 }
 
-.register__container {
+.login__container {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 20px;
 }
 
-.register__label {
+.login__label {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -41,7 +41,7 @@
   position: relative;
 }
 
-.register__label-title {
+.login__label-title {
   font-weight: 400;
   font-size: 10px;
   line-height: 1.2;
@@ -50,7 +50,7 @@
   padding: 0;
 }
 
-.register__input {
+.login__input {
   border-style: none;
   font-weight: 400;
   font-size: 14px;
@@ -61,7 +61,7 @@
   padding: 10px 15px;
 }
 
-.register__error {
+.login__error {
   font-weight: 400;
   font-size: 10px;
   line-height: 1.2;
@@ -69,7 +69,7 @@
   margin-top: 10px;
 }
 
-.register__button {
+.login__button {
   border-style: none;
   background-color: #3456f3;
   border-radius: 3px;
@@ -81,23 +81,23 @@
   transition: all 0.3s ease;
   cursor: pointer;
   font-weight: 500;
-  margin-top: 29px;
+  margin-top: 139px;
 }
 
-.register__link {
+.login__link {
   transition: all 0.3s ease;
-  color: #3456F3;
+  color: #3456f3;
   text-decoration: none;
   line-height: 0;
   max-width: 38px;
 }
 
-.register__logo {
+.login__logo {
   width: 38px;
   height: 38px;
 }
 
-.register__details {
+.login__details {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
@@ -106,11 +106,7 @@
   margin-top: -10px;
 }
 
-.register__input-password {
-  color: #ee3465;
-}
-
-.register__button-disabled {
+.login__button-disabled {
   background-color: #f4f4f4;
   color: #a0a0a0;
   cursor: default;
