@@ -8,7 +8,7 @@ function Register() {
   const { handleChange, resetForm, errors, isValid } = FormValidation();
 
   function handleSubmit(e) {
-    e.preventDefault();   
+    e.preventDefault();
   }
 
   useEffect(() => {
@@ -59,9 +59,13 @@ function Register() {
             <span className="register__error">{errors.password || ""}</span>
           </label>
         </div>
-        <button type="submit" 
-        className={`register__button ${!isValid && 'register__button-disabled'}`}        
-         disabled={!isValid}>
+        <button
+          type="submit"
+          className={`register__button ${
+            !isValid && "register__button-disabled"
+          }`}
+          disabled={!isValid}
+        >
           Зарегистрироваться
         </button>
         <span className="register__details">
