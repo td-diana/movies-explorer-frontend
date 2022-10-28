@@ -80,6 +80,82 @@
 
 .about-me__foto {
   width: 270px;
+  height: 327px;
   object-fit: cover;
   border-radius: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .about-me__container {
+    padding: 90px 50px;
+  }
+
+  .about-me__name {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .about-me__age {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 16px 0 0;
+  }
+
+  .about-me__text {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 20px 0 0;
+  }
+
+  .about-me__links {
+    margin: 87px 0 0;
+  }
+
+  .about-me__foto {
+    width: 255px;
+    height: 307px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .about-me__container {
+    padding: 70px 18px;
+  }
+  .about-me__title {
+    font-size: 18px;
+    line-height: 1.22;
+    padding-bottom: 28px;
+  }
+
+  .about-me__author {
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-top: 60px;
+    gap: 40px;
+  }
+
+  .about-me__foto {
+    width: 292px;
+    height: 352px;
+  }
+
+  .about-me__name {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .about-me__age {
+    font-size: 11px;
+    line-height: 1.45;
+    margin: 20px 0 0;
+  }
+
+  .about-me__text {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .about-me__links {
+    margin: 40px 0 0;
+  }
 }

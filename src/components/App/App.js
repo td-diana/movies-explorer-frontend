@@ -12,9 +12,7 @@ import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
 
 function App() {
-  
-  // const footerEndpoints = ["/movies", "/saved-movies", "/"];
-  
+
   return (
     <div className="app">
       <Routes>
@@ -31,7 +29,7 @@ function App() {
           path="/movies"
           element={[
             <Header LoggeIn={true} theme={true} />,
-            <Movies LoggeIn={true} />,
+            <Movies />,
             <Footer />,
           ]}
         />
@@ -39,7 +37,7 @@ function App() {
           path="/saved-movies"
           element={[
             <Header LoggeIn={true} theme={true} />,
-            <SavedMovies LoggeIn={true} />,
+            <SavedMovies />,
             <Footer />,
           ]}
         />
@@ -47,7 +45,7 @@ function App() {
           path="/profile"
           element={[
             <Header LoggeIn={true} theme={true} />,
-            <Profile LoggeIn={true} />,
+            <Profile />,
           ]}
         />
         <Route path="/signup" element={<Register />} />

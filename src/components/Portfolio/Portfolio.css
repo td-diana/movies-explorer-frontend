@@ -10,7 +10,7 @@
   max-width: 1280px;
   width: 100%;
   display: flex;
-  justify-content: space-between;  
+  justify-content: space-between;
   gap: 50px;
   flex-direction: column;
   padding: 0 70px 125px;
@@ -62,4 +62,27 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+}
+
+@media screen and (max-width: 768px) {
+  .portfolio__container {
+    padding: 0 50px 90px;
+  }
+
+  .portfolio__link {
+    font-size: 28px;
+    line-height: 1.79;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .portfolio__container {
+    gap: 40px;
+    padding: 70px 18px;
+  }
+
+  .portfolio__link {
+    font-size: 18px;
+    line-height: 1.56;
+  }
 }

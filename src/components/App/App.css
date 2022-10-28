@@ -6,6 +6,9 @@
   font-family: "Inter", Arial, sans-serif;
   text-rendering: optimizeLegibility;
   flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  align-items: center;
 }
 
 /* *,

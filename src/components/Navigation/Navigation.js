@@ -7,12 +7,12 @@ function Navigation({ LoggeIn }) {
       {!LoggeIn ? (
         <nav className="navigation">
           <ul className="navigation__list">
-            <li navigation__item>
+            <li>
               <Link to="/signup" className="navigation__link">
                 Регистрация
               </Link>
             </li>
-            <li navigation__item>
+            <li>
               <Link
                 to="/signin"
                 className="navigation__link navigation__link-signin"
