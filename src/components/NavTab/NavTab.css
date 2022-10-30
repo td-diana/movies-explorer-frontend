@@ -30,6 +30,11 @@
   align-items: center;
   text-decoration-line: underline;
   color: #000000;
+  transition: all 0.3s ease;
+}
+
+.nav-tab__link:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 420px) {

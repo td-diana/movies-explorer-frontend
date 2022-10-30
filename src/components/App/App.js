@@ -1,5 +1,5 @@
-import { Route, Routes } from "react-router-dom";
-// import { useState } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { useState } from "react";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -10,12 +10,14 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
+import Preloader from "../Preloader/Preloader";
 
 function App() {
-
+  const [loggedIn, setLoggedIn] = useState(false); 
   return (
     <div className="app">
       <Routes>
+      <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/signin" />}/>
         <Route
           exact
           path="/"
@@ -54,6 +56,7 @@ function App() {
       </Routes>
       {/* <Main /> */}
       {/* <Footer /> */}
+      {/* <Preloader /> */}
     </div>
   );
 }

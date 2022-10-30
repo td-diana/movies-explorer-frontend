@@ -5,6 +5,10 @@
   background-color: #dddee3;
 }
 
+.header_theme_logged {
+  background-color: #fff;
+}
+
 .header__container {
   max-width: 1280px;
   width: 100%;
@@ -34,3 +38,4 @@
     padding: 18px 14px;
   }
 }
+

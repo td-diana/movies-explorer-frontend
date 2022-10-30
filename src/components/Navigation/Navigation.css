@@ -1,6 +1,8 @@
 .navigation {
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: flex-end;
 }
 
 .navigation__list {
@@ -13,8 +15,14 @@
   align-items: center;
 }
 
+.navigation__item {
+}
+
 .navigation__list-loggedin {
   gap: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .navigation__link {
@@ -52,7 +60,7 @@
   position: relative;
   padding-left: 11px;
   padding-right: 36px;
-  margin-left: 364px;
+  /* margin-left: 364px; */
   /* margin-right: 70px; */
 }
 
@@ -71,10 +79,18 @@
   background-image: url("../../images/icon-account.svg");
 }
 
-@media screen and (max-width: 820px) {
+.navigation__mob-menu {
+  width: 44px;
+  height: 44px;
+}
+
+@media screen and (max-width: 768px) {
   .navigation__link {
     font-size: 18px;
     line-height: 1.22;
+  }
+
+  .navigation__list-loggedin {
   }
 }
 
