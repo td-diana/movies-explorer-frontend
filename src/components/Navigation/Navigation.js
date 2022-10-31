@@ -1,16 +1,17 @@
-// import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import "./Navigation.css";
-// import MobMenu from "../MobMenu/MobMenu";
-import mobmenu from "../../images/icon-mob-menu.svg";
 
-function Navigation({ LoggeIn }) {
-  const isMobile = useMediaQuery({ query: `(max-width: 800px)` });
+function Navigation({ LoggedIn, onClickMobmenu, isMobmenuOpened }) {
+  const isMobile = useMediaQuery({ query: `(max-width: 768px)` });
+
+  function handleOnClickMobmenu() {
+    onClickMobmenu(isMobmenuOpened);
+  }
 
   return (
     <>
-      {!LoggeIn ? (
+      {!LoggedIn ? (
         <nav className="navigation">
           <ul className="navigation__list">
             <li>
@@ -29,7 +30,11 @@ function Navigation({ LoggeIn }) {
           </ul>
         </nav>
       ) : isMobile ? (
-        <img className="navigation__mob-menu" src={mobmenu} alt="логотип" />
+        <button
+          type="button"
+          className="navigation__mob-menu-button"
+          onClick={handleOnClickMobmenu}
+        />
       ) : (
         <nav className="navigation">
           <ul className="navigation__list navigation__list-loggedin">

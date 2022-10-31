@@ -15,9 +15,6 @@
   align-items: center;
 }
 
-.navigation__item {
-}
-
 .navigation__list-loggedin {
   gap: 20px;
   width: 100%;
@@ -79,7 +76,11 @@
   background-image: url("../../images/icon-account.svg");
 }
 
-.navigation__mob-menu {
+.navigation__mob-menu-button {
+  background-image: url("../../images/icon-mob-menu.svg");
+  background-position: center;
+  background-color: transparent;
+ 
   width: 44px;
   height: 44px;
 }

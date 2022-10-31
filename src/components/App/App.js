@@ -1,5 +1,5 @@
-import { Route, Routes, Navigate } from "react-router-dom";
 import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -10,27 +10,46 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
-import Preloader from "../Preloader/Preloader";
+import MobMenu from "../MobMenu/MobMenu";
+// import Preloader from "../Preloader/Preloader";
 
-function App() {
-  const [loggedIn, setLoggedIn] = useState(false); 
+export default function App() {
+  const [isMobmenuOpened, setMobmenuOpened] = useState(false);
+
+  function onClickMobmenu(isMobmenuOpened) {
+    setMobmenuOpened(!isMobmenuOpened);
+  }
+
+  function closeMobmenu() {
+    setMobmenuOpened(false);   
+  }
+
   return (
     <div className="app">
       <Routes>
-      <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/signin" />}/>
         <Route
           exact
           path="/"
           element={[
-            <Header LoggeIn={false} theme={false} />,
-            <Main LoggeIn={false} />,
+            <Header
+              LoggedIn={false}
+              theme={false}
+              onClickMobmenu={onClickMobmenu}
+              isMobmenuOpened={isMobmenuOpened}
+            />,
+            <Main />,
             <Footer />,
           ]}
         />
         <Route
           path="/movies"
           element={[
-            <Header LoggeIn={true} theme={true} />,
+            <Header
+              LoggedIn={true}
+              theme={true}
+              onClickMobmenu={onClickMobmenu}
+              isMobmenuOpened={isMobmenuOpened}
+            />,
             <Movies />,
             <Footer />,
           ]}
@@ -38,27 +57,40 @@ function App() {
         <Route
           path="/saved-movies"
           element={[
-            <Header LoggeIn={true} theme={true} />,
+            <Header
+              LoggedIn={true}
+              theme={true}
+              onClickMobmenu={onClickMobmenu}
+              isMobmenuOpened={isMobmenuOpened}
+            />,
             <SavedMovies />,
             <Footer />,
           ]}
         />
+        <Route path="/signup" element={<Register />} />
+        <Route path="/signin" element={<Login />} />
         <Route
           path="/profile"
           element={[
-            <Header LoggeIn={true} theme={true} />,
+            <Header
+              LoggedIn={true}
+              theme={true}
+              onClickMobmenu={onClickMobmenu}
+              isMobmenuOpened={isMobmenuOpened}
+            />,
             <Profile />,
           ]}
         />
-        <Route path="/signup" element={<Register />} />
-        <Route path="/signin" element={<Login />} />
-        <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       {/* <Main /> */}
       {/* <Footer /> */}
       {/* <Preloader /> */}
+      <MobMenu
+        onClickMobmenu={onClickMobmenu}
+        isMobmenuOpened={isMobmenuOpened}
+        closeMobmenu={closeMobmenu}
+      />
     </div>
   );
 }
-
-export default App;
