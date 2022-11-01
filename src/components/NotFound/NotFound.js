@@ -1,13 +1,13 @@
-import './NotFound.css';
+import "./NotFound.css";
 
-function NotFound() {
+function NotFound({ goBack }) {
   return (
     <main className="not-found">
       <p className="not-found__container">
         <span className="not-found__title">404</span>
         <span className="not-found__text">Страница не найдена</span>
       </p>
-      <button className="not-found__button">
+      <button type="button" className="not-found__button" onClick={goBack}>
         Назад
       </button>
     </main>

@@ -3,6 +3,13 @@ import { useEffect } from "react";
 import "./MobMenu.css";
 
 function MobMenu({ onClickMobmenu, isMobmenuOpened, closeMobmenu }) {
+ 
+  const setActive = ({ isActive }) =>
+  isActive
+    ? "mob-menu__link mob-menu__link_active"
+    : "mob-menu__link";
+
+
   useEffect(() => {
     if (!isMobmenuOpened) return;
 
@@ -24,22 +31,27 @@ function MobMenu({ onClickMobmenu, isMobmenuOpened, closeMobmenu }) {
 
   return (
     <nav
-      className={`mob-menu mob-menu_status_${isMobmenuOpened ? "opened" : ""}`}
+      className={`mob-menu mob-menu_status_${isMobmenuOpened ? "opened" : "closed"}`}
       onClick={handleOverlay}
     >
       <ul className="mob-menu__list mob-menu__list_logged">
         <li className="mob-menu__item">
-          <NavLink to="/" className="mob-menu__link">
+          <NavLink to="" className={setActive} end>
             Главная
           </NavLink>
         </li>
+        
         <li className="mob-menu__item">
-          <NavLink to="/movies" className="mob-menu__link">
+          <NavLink
+            to="/movies"
+            className={setActive}
+            
+          >
             Фильмы
           </NavLink>
         </li>
         <li className="mob-menu__item">
-          <NavLink to="/saved-movies" className="mob-menu__link">
+          <NavLink to="/saved-movies" className={setActive} >
             Сохранённые фильмы
           </NavLink>
         </li>

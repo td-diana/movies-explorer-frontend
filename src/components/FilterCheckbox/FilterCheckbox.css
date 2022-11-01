@@ -55,3 +55,15 @@
   line-height: 1.29;
   right: 0;
 }
+
+
+@media screen and (max-width: 420px) {
+  .filter-checkbox {    
+    width: 148px;
+  }
+
+  .filter-checkbox__text {
+    font-size: 11px;
+    line-height: 1.64;
+  }
+}

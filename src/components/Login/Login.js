@@ -55,7 +55,7 @@ function Login() {
         </button>
         <span className="login__details">
           Еще не зарегистрированы?&nbsp;
-          <Link to="signup" className="login__link">
+          <Link to="/signup" className="login__link">
             Регистрация
           </Link>
         </span>

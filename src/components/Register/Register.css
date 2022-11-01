@@ -1,5 +1,5 @@
 .register {
-  /* max-width: 1280px; */
+  max-width: 1280px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -114,4 +114,22 @@
   background-color: #f4f4f4;
   color: #a0a0a0;
   cursor: default;
+}
+
+
+@media screen and (max-width: 768px) {
+  .register {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .register__form {
+    align-items: center;
+    max-width: 260px;
+  }
+  .register__button {
+    font-size: 12px;
+    line-height: 1.25;
+  }
 }

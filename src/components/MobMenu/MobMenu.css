@@ -25,7 +25,7 @@
 }
 
 .mob-menu_status_closed {  
-  position: static;
+  display: none;
 }
 
 .mob-menu__list_logged {
@@ -56,6 +56,10 @@
   text-decoration: none;
 }
 
+.mob-menu__link_active {
+  border-bottom: 2px solid #000;
+}
+
 .mob-menu__button-close {
   background-image: url("../../images/icon-close.svg");
   background-position: center;
@@ -69,4 +73,16 @@
   background-color: transparent;
   border: none;
   transition: 0.3s;
+}
+
+@media screen and (max-width: 420px) {
+  .mob-menu__list_logged {   
+    width: 100%;
+  }
+  .mob-menu__item:first-child {
+    margin-top: 144px;
+  }
+  .mob-menu__item:last-child {
+    margin: auto 0 46px 0;
+  }
 }

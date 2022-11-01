@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -15,14 +16,20 @@ import MobMenu from "../MobMenu/MobMenu";
 
 export default function App() {
   const [isMobmenuOpened, setMobmenuOpened] = useState(false);
+  const navigate = useNavigate();
 
   function onClickMobmenu(isMobmenuOpened) {
     setMobmenuOpened(!isMobmenuOpened);
   }
 
   function closeMobmenu() {
-    setMobmenuOpened(false);   
+    setMobmenuOpened(false);
   }
+
+  function goBack() {
+    navigate(-1)
+  }
+
 
   return (
     <div className="app">
@@ -81,7 +88,7 @@ export default function App() {
             <Profile />,
           ]}
         />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound goBack={goBack} />}   />
       </Routes>
       {/* <Main /> */}
       {/* <Footer /> */}

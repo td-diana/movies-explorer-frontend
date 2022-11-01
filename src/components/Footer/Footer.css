@@ -35,7 +35,6 @@
 }
 
 .footer__copyright {
-  font-style: normal;
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
@@ -65,5 +64,30 @@
 @media screen and (max-width: 768px) {
   .footer__container {
     padding: 79px 30px 20px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .footer__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .footer__list {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .footer__nav {
+    flex-direction: column-reverse;
+  }
+
+  .footer__copyright {
+    font-size: 12px;
+    line-height: 15px;
+    padding: 0;
+    margin-top: 30px;
+    color: #a0a0a0;
   }
 }

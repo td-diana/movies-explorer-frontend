@@ -99,3 +99,43 @@
   transition: all 0.3s ease;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .profile {
+    padding-top: 236px;
+    }
+
+  .profile__form {
+    min-height: 445px;
+    gap: 80px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .profile {
+    padding-top: 70px;
+    justify-content: flex-start;
+  }
+
+  .profile__form {
+    max-width: 260px;
+    min-height: 500px;
+    flex: 1;
+    gap: 65px;
+  }
+
+  .profile__button-edit {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .profile__button-exit {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .profile__error {
+    font-size: 8px;
+    top: 45px;
+  }
+}

@@ -12,8 +12,10 @@ function MoviesCard() {
   return (
     <li className="movies-card">
       <div className="movies-card__description">
+        <div>
         <h2 className="movies-card__title">Название фильма</h2>
         <span className="movies-card__duration">1.53 ч</span>
+        </div>
         {pathname === '/movies' && (
         <button
           type="button"
@@ -30,6 +32,7 @@ function MoviesCard() {
             ></button>
             )}
       </div>
+      
       <img className="movies-card__poster" src={film} />
     </li>
   );
