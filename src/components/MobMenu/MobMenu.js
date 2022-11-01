@@ -58,7 +58,7 @@ function MobMenu({ onClickMobmenu, isMobmenuOpened, closeMobmenu }) {
         <li className="mob-menu__item">
           <NavLink
             to="/profile"
-            className="mob-menu__link navigation__link-account"
+            className="mob-menu__link mob-menu__link-account"
           >
             Аккаунт
           </NavLink>

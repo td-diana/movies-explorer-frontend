@@ -54,11 +54,15 @@
   font-size: 14px;
   line-height: 1.29;
   right: 0;
+  transition: all 0.3s ease;
 }
 
+.filter-checkbox__text:hover {
+  opacity: 0.7;
+}
 
 @media screen and (max-width: 420px) {
-  .filter-checkbox {    
+  .filter-checkbox {
     width: 148px;
   }
 

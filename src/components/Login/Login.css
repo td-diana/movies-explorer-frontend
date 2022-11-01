@@ -62,6 +62,10 @@
   padding: 10px 15px;
 }
 
+.login__input-password {
+  color: #ee3465;
+}
+
 .login__error {
   font-weight: 400;
   font-size: 10px;
@@ -85,17 +89,30 @@
   margin-top: 139px;
 }
 
+.login__button:hover {
+  opacity: 0.7;
+}
+
 .login__link {
-  transition: all 0.3s ease;
   color: #3456f3;
   text-decoration: none;
   line-height: 0;
   max-width: 38px;
+  transition: all 0.3s ease;
+}
+
+.login__link:hover {
+  opacity: 0.7;
 }
 
 .login__logo {
   width: 38px;
   height: 38px;
+  transition: all 0.3s ease;
+}
+
+.login__logo:hover {
+  opacity: 0.7;
 }
 
 .login__details {

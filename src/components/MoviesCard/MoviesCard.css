@@ -16,7 +16,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  
+
   flex-direction: column;
   padding: 22px;
 }
@@ -26,7 +26,7 @@
   font-size: 18px;
   line-height: 1.22;
   color: #000000;
-  padding: 0;
+  padding-bottom: 13px;
   margin: 0;
 }
 
@@ -73,9 +73,7 @@
   .movies-card__description {
     flex-direction: row;
     padding: 14px 16px 14px 12px;
-
   }
-    
 
   .movies-card__title {
     max-width: 230px;

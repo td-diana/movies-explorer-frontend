@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
 import film from "../../images/pic-film.png";
 
-function MoviesCard() {
+function MoviesCard({ movie }) {
   const [isCardSaved, setIsCardSaved] = useState(false);
   const { pathname } = useLocation();
   function handleOnClick() {

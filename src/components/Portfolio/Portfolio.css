@@ -49,6 +49,11 @@
   color: #000;
   width: 100%;
   position: relative;
+  transition: all 0.3s ease;
+}
+
+.portfolio__link:hover {
+  opacity: 0.7;
 }
 
 .portfolio__link::after {

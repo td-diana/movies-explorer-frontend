@@ -8,7 +8,7 @@ function Login() {
   const { handleChange, resetForm, errors, isValid } = FormValidation();
 
   function handleSubmit(e) {
-    e.preventDefault();   
+    e.preventDefault();
   }
 
   useEffect(() => {
@@ -17,25 +17,12 @@ function Login() {
 
   return (
     <main className="login">
-      <form className="login__form" onSubmit={handleSubmit}>
+      <form className="login__form" onSubmit={handleSubmit} noValidate>
         <Link to="/" className="login__logo">
           <img src={logo} alt="логотип" />
         </Link>
         <h1 className="login__title">Рады видеть!</h1>
         <div className="login__container">
-          <label className="login__label">
-            <span className="login__label-title">Имя</span>
-            <input
-              name="name"
-              className="login__input"
-              type="text"
-              required
-              minLength="2"
-              maxLength="30"
-              onChange={handleChange}
-            />
-            <span className="login__error">{errors.name || ""}</span>
-          </label>
           <label className="login__label">
             <span className="login__label-title">E-mail</span>
             <input
@@ -46,11 +33,24 @@ function Login() {
               onChange={handleChange}
             />
             <span className="login__error">{errors.email || ""}</span>
-          </label>        
+          </label>
+          <label className="login__label">
+            <span className="login__label-title">Пароль</span>
+            <input
+              name="password"
+              className="login__input login__input-password"
+              onChange={handleChange}
+              type="password"
+              required
+            />
+            <span className="login__error">{errors.password || ""}</span>
+          </label>
         </div>
-        <button type="submit" 
-        className={`login__button ${!isValid && 'login__button-disabled'}`}        
-         disabled={!isValid}>
+        <button
+          type="submit"
+          className={`login__button ${!isValid && "login__button-disabled"}`}
+          disabled={!isValid}
+        >
           Войти
         </button>
         <span className="login__details">
