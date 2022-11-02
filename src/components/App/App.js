@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
@@ -29,7 +29,6 @@ export default function App() {
   function goBack() {
     navigate(-1)
   }
-
 
   return (
     <div className="app">

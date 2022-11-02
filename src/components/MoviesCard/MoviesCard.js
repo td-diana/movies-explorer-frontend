@@ -31,9 +31,8 @@ function MoviesCard({ movie }) {
               className="movies-card__button movies-card__button_unsave"
             ></button>
             )}
-      </div>
-      
-      <img className="movies-card__poster" src={film} />
+      </div>      
+      <img className="movies-card__poster" src={film} alt="постер"/>
     </li>
   );
 }

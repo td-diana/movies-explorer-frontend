@@ -5,7 +5,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 70px 0px;
+  /* padding: 70px 0px; */
+  padding: 70px 30px 59px;
 }
 
 .register__form {
@@ -36,7 +37,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-
   cursor: pointer;
   position: relative;
 }
@@ -67,6 +67,9 @@
   line-height: 1.2;
   color: #ee3465;
   margin-top: 10px;
+  position: absolute;
+  left: 0;
+  top: 47px;
 }
 
 .register__button {
@@ -81,7 +84,7 @@
   transition: all 0.3s ease;
   cursor: pointer;
   font-weight: 500;
-  margin-top: 29px;
+  margin-top: auto;
 }
 
 .register__button:hover {
@@ -116,7 +119,9 @@
   line-height: 1.21;
   color: #a0a0a0;
   text-align: center;
-  margin-top: -10px;
+  position: absolute;
+  bottom: -5%;
+  left: 15%;
 }
 
 .register__input-password {
@@ -140,8 +145,16 @@
     align-items: center;
     max-width: 260px;
   }
+
   .register__button {
     font-size: 12px;
     line-height: 1.25;
+  }
+
+  .register__details {
+    font-size: 12px;
+    line-height: 1.25;
+    bottom: -6%;
+    left: 4%;
   }
 }

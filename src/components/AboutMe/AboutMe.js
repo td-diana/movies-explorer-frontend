@@ -22,17 +22,14 @@ function AboutMe() {
                 <a
                   href="https://github.com/td-diana"
                   className="about-me__link"
+                  target="blank"
                 >
                   Github
                 </a>
               </li>
             </ul>
           </div>
-          <img
-            className="about-me__foto"
-            src={foto}
-            alt="фото автора"
-          />
+          <img className="about-me__foto" src={foto} alt="фото автора" />
         </div>
       </div>
     </section>
