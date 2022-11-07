@@ -1,0 +1,156 @@
+.about-project {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: #fafafa;
+}
+
+.about-project__container {
+  max-width: 1280px;
+  width: 100%;
+  padding: 110px 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.about-project__title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.23;
+  letter-spacing: -0.04em;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 23px;
+  width: 100%;
+}
+
+.about-project__list {
+  display: flex;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 70px 0 93px;
+  gap: 40px;
+}
+
+.about-project__item {
+  max-width: 550px;
+}
+
+.about-project__item-title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.about-project__item-description {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.43;
+  margin-top: 26px;
+}
+
+.about-project__project {
+  display: flex;
+  width: 100%;
+}
+
+.about-project__backend {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  align-items: center;
+  gap: 15px;
+}
+
+.about-project__frontend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.about-project__backend-time {
+  text-align: center;
+  width: 100%;
+  padding: 9px 0;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #fff;
+  background-color: #3456f3;
+}
+
+.about-project__frontend-time {
+  text-align: center;
+  width: 100%;
+  padding: 9px 0;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #000000;
+  background-color: #f2f2f2;
+}
+
+.about-project__project-title {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #a0a0a0;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project__container {
+    padding: 90px 50px;
+  }
+
+  .about-project__item-description {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: 22px;
+  }
+
+  .about-project__list {
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .about-project__container {
+    padding: 70px 18px;
+  }
+  .about-project__title {
+    font-size: 18px;
+    line-height: 1.22;
+    padding-bottom: 28px;
+  }
+
+  .about-project__list {
+    flex-direction: column;
+    padding: 60px 0;
+    gap: 56px;
+  }
+
+  .about-project__item-title {
+    font-size: 18px;
+    line-height: 1.22;
+  }
+
+  .about-project__backend-time {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about-project__project-title {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

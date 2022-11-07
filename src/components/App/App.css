@@ -1,0 +1,18 @@
+.app {
+  display: flex;
+  min-height: 100vh;
+  min-width: 320px;
+  width: 100%;
+  font-family: "Inter", Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  align-items: center;
+}
+
+/* *,
+*::before,
+*::after {
+  outline: 1px solid red;
+} */
