@@ -2,10 +2,14 @@
   display: flex;
   width: 100%;
   justify-content: space-around;
+  /* background-color: #dddee3; */
+}
+
+.header_theme_grey {
   background-color: #dddee3;
 }
 
-.header_theme_logged {
+.header_theme_white {
   background-color: #fff;
 }
 
@@ -38,4 +42,3 @@
     padding: 18px 14px;
   }
 }
-

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import mainApi from "../../utils/MainApi";
 import { Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
@@ -13,10 +14,24 @@ import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
 import MobMenu from "../MobMenu/MobMenu";
 // import Preloader from "../Preloader/Preloader";
+import ProtectedRoute from "../../utils/ProtectedRoute";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 export default function App() {
   const [isMobmenuOpened, setMobmenuOpened] = useState(false);
   const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+
+  // получение информации о пользователе
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi
+        .getUserInfo()
+        .then((res) => setCurrentUser(res))
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn]);
 
   function onClickMobmenu(isMobmenuOpened) {
     setMobmenuOpened(!isMobmenuOpened);
@@ -27,76 +42,116 @@ export default function App() {
   }
 
   function goBack() {
-    navigate(-1)
+    navigate(-1);
+  }
+
+  function onRegister({ name, email, password }) {
+    mainApi
+      .createUser(name, email, password)
+      .then((data) => {
+        if (data._id) {
+          onLogin({ email, password });
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function onLogin({ email, password }) {
+    mainApi
+      .login(email, password)
+      .then((jwt) => {
+        if (jwt.token) {
+          setLoggedIn(true);
+          localStorage.setItem("jwt", jwt.token);
+          navigate("/movies");
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // выход из аккаунта
+  function handleLogOut() {
+    setCurrentUser({});
+    setLoggedIn(false);
+    localStorage.removeItem("jwt");
+    navigate("/");
   }
 
   return (
     <div className="app">
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={[
-            <Header
-              LoggedIn={false}
-              theme={false}
-              onClickMobmenu={onClickMobmenu}
-              isMobmenuOpened={isMobmenuOpened}
-            />,
-            <Main />,
-            <Footer />,
-          ]}
-        />
-        <Route
-          path="/movies"
-          element={[
-            <Header
-              LoggedIn={true}
-              theme={true}
-              onClickMobmenu={onClickMobmenu}
-              isMobmenuOpened={isMobmenuOpened}
-            />,
-            <Movies />,
-            <Footer />,
-          ]}
-        />
-        <Route
-          path="/saved-movies"
-          element={[
-            <Header
-              LoggedIn={true}
-              theme={true}
-              onClickMobmenu={onClickMobmenu}
-              isMobmenuOpened={isMobmenuOpened}
-            />,
-            <SavedMovies />,
-            <Footer />,
-          ]}
-        />
-        <Route path="/signup" element={<Register />} />
-        <Route path="/signin" element={<Login />} />
-        <Route
-          path="/profile"
-          element={[
-            <Header
-              LoggedIn={true}
-              theme={true}
-              onClickMobmenu={onClickMobmenu}
-              isMobmenuOpened={isMobmenuOpened}
-            />,
-            <Profile />,
-          ]}
-        />
-        <Route path="*" element={<NotFound goBack={goBack} />}   />
-      </Routes>
-      {/* <Main /> */}
-      {/* <Footer /> */}
-      {/* <Preloader /> */}
-      <MobMenu
+      <CurrentUserContext.Provider value={currentUser}>
+        {/* <Header
+        loggedIn={loggedIn}
         onClickMobmenu={onClickMobmenu}
         isMobmenuOpened={isMobmenuOpened}
-        closeMobmenu={closeMobmenu}
-      />
+      />           */}
+
+        <Routes>
+          <Route
+            path="/"
+            element={[
+              <Header
+                loggedIn={loggedIn}
+                onClickMobmenu={onClickMobmenu}
+                isMobmenuOpened={isMobmenuOpened}
+              />,
+              <Main />,
+              <Footer />,
+            ]}
+          />
+          <Route
+            path="/signup"
+            element={<Register onRegister={onRegister} />}
+          />
+          <Route path="/signin" element={<Login onLogin={onLogin} />} />
+
+          <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
+            <Route
+              path="/movies"
+              element={[
+                <Header
+                  loggedIn={loggedIn}
+                  onClickMobmenu={onClickMobmenu}
+                  isMobmenuOpened={isMobmenuOpened}
+                />,
+                <Movies />,
+                <Footer />,
+              ]}
+            />
+            <Route
+              path="/saved-movies"
+              element={[
+                <Header
+                  loggedIn={loggedIn}
+                  onClickMobmenu={onClickMobmenu}
+                  isMobmenuOpened={isMobmenuOpened}
+                />,
+                <SavedMovies />,
+              ]}
+            />
+            <Route
+              path="/profile"
+              element={[
+                <Header
+                  loggedIn={loggedIn}
+                  onClickMobmenu={onClickMobmenu}
+                  isMobmenuOpened={isMobmenuOpened}
+                />,
+                <Profile handleLogOut={handleLogOut} />,
+              ]}
+            />
+            <Route path="*" element={<NotFound goBack={goBack} />} />
+          </Route>
+        </Routes>
+
+        {/* <Footer /> */}
+        {/* <Preloader /> */}
+        <MobMenu
+          onClickMobmenu={onClickMobmenu}
+          isMobmenuOpened={isMobmenuOpened}
+          closeMobmenu={closeMobmenu}
+        />
+      </CurrentUserContext.Provider>
     </div>
   );
 }

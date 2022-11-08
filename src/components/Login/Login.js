@@ -4,11 +4,12 @@ import "./Login.css";
 import logo from "../../images/logo-movies-explorer-blue.svg";
 import FormValidation from "../../validation/formValidation";
 
-function Login() {
-  const { handleChange, resetForm, errors, isValid } = FormValidation();
+function Login({ onLogin }) {
+  const { handleChange, resetForm, errors, isValid, values } = FormValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
+    onLogin(values);
   }
 
   useEffect(() => {
@@ -29,6 +30,7 @@ function Login() {
               name="email"
               className="login__input"
               type="email"
+              value={values.email || ''}
               required
               onChange={handleChange}
             />
@@ -41,6 +43,7 @@ function Login() {
               className="login__input login__input-password"
               onChange={handleChange}
               type="password"
+              value={values.password || ''}
               required
             />
             <span className="login__error">{errors.password || ""}</span>

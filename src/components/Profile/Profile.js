@@ -1,22 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./Profile.css";
 import FormValidation from "../../validation/formValidation";
 
-function Profile() {  
-  const { handleChange, resetForm, errors } = FormValidation();
+function Profile({ handleLogOut }) {
+  const { handleChange, resetForm, errors, values } = FormValidation();
+  const currentUser = useContext(CurrentUserContext);
 
   function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault();    
   }
 
   useEffect(() => {
-    resetForm();
-  }, [resetForm]);
+    if (currentUser) {
+      resetForm(currentUser, {}, true);
+    }
+  }, [currentUser, resetForm]);
 
   return (
     <main className="profile">
       <form className="profile__form" name="profile" onSubmit={handleSubmit}>
-        <h1 className="profile__title">Привет, !</h1>
+        <h1 className="profile__title">{`Привет, ${
+          currentUser.name || ""
+        }!`}</h1>
         <div className="profile__container">
           <label className="profile__label">
             <span className="profile__label-text">Имя</span>
@@ -25,6 +31,7 @@ function Profile() {
               className="profile__input"
               onChange={handleChange}
               type="text"
+              value={values.name || ""}
               required
               minLength="2"
               maxLength="30"
@@ -38,6 +45,7 @@ function Profile() {
               className="profile__input"
               onChange={handleChange}
               type="email"
+              value={values.email || ""}
               required
             />
             <span className="profile__error">{errors.email || ""}</span>
@@ -47,7 +55,11 @@ function Profile() {
           <button type="submit" className="profile__button-edit">
             Редактировать
           </button>
-          <button type="submit" className="profile__button-exit">
+          <button
+            type="submit"
+            className="profile__button-exit"
+            onClick={handleLogOut}
+          >
             Выйти из аккаунта
           </button>
         </div>
