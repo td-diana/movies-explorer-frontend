@@ -3,12 +3,14 @@ import { useState } from "react";
 import moviesApi from "../../utils/MoviesApi";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+// import Preloader from "../Preloader/Preloader";
 
-function Movies() {
+function Movies({ setIsPreloader }) {
   const [isAllMovies, setAllMovies] = useState([]); // фильмы с сервера
   const [initialMovies, setInitialMovies] = useState([]); // фильмы с запроса
   const [filteredMovies, setFilteredMovies] = useState([]); // фильмы отфильтрованные
   const [shortMovies, setShortMovies] = useState(false); // состояние короткометражек
+  // const [isPreloader, setIsPreloader] = useState(false);
 
   // изображения с сервера
   function convertMovies(movies) {
@@ -23,8 +25,11 @@ function Movies() {
   function filterMovies(movies, userQuery, shortMoviesCheckbox) {
     const moviesUserQuery = movies.filter((movie) => {
       const movieRu = String(movie.nameRU).toLowerCase().trim();
+      const movieEn = String(movie.nameEN).toLowerCase().trim();
       const userMovie = userQuery.toLowerCase().trim();
-      return movieRu.indexOf(userMovie) !== -1;
+      return (
+        movieRu.indexOf(userMovie) !== -1 || movieEn.indexOf(userMovie) !== -1
+      );
     });
     if (shortMoviesCheckbox) {
       return filterShortMovies(moviesUserQuery);
@@ -45,10 +50,14 @@ function Movies() {
   // поиск по запросу к серверу
   function handleSearchSubmit(inputValue) {
     if (isAllMovies.length === 0) {
-      moviesApi.getMovies().then((movies) => {
-        setAllMovies(movies);
-        handleFilteredMovies(convertMovies(movies), inputValue, shortMovies);
-      });
+      setIsPreloader(true);
+      moviesApi
+        .getMovies()
+        .then((movies) => {
+          setAllMovies(movies);
+          handleFilteredMovies(convertMovies(movies), inputValue, shortMovies);
+        })
+        .finally(() => setIsPreloader(false));
     } else {
       handleFilteredMovies(isAllMovies, inputValue, shortMovies);
     }

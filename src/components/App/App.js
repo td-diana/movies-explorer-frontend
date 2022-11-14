@@ -1,6 +1,6 @@
+import "./App.css";
 import { useState, useEffect } from "react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import "./App.css";
 import mainApi from "../../utils/MainApi";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -14,7 +14,7 @@ import NotFound from "../NotFound/NotFound";
 import MobMenu from "../MobMenu/MobMenu";
 import ProtectedRoute from "../../utils/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-// import Preloader from "../Preloader/Preloader";
+import Preloader from "../Preloader/Preloader";
 
 export default function App() {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ export default function App() {
   const [isMobmenuOpened, setMobmenuOpened] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [isPreloader, setIsPreloader] = useState(false);
 
   // проверка токена и авторизация пользователя
   useEffect(() => {
@@ -107,12 +108,6 @@ export default function App() {
   return (
     <div className="app">
       <CurrentUserContext.Provider value={currentUser}>
-        {/* <Header
-        loggedIn={loggedIn}
-        onClickMobmenu={onClickMobmenu}
-        isMobmenuOpened={isMobmenuOpened}
-      />           */}
-
         <Routes>
           <Route
             path="/"
@@ -131,7 +126,6 @@ export default function App() {
             element={<Register onRegister={onRegister} />}
           />
           <Route path="/signin" element={<Login onLogin={onLogin} />} />
-
           <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
             <Route
               path="/movies"
@@ -141,14 +135,11 @@ export default function App() {
                   onClickMobmenu={onClickMobmenu}
                   isMobmenuOpened={isMobmenuOpened}
                 />,
-
-                <Movies                  
-                  loggedIn={loggedIn}                               
-                />,
+                <Movies loggedIn={loggedIn} setIsPreloader={setIsPreloader} />,
                 <Footer />,
               ]}
             />
-            
+
             <Route
               path="/saved-movies"
               element={[
@@ -157,7 +148,8 @@ export default function App() {
                   onClickMobmenu={onClickMobmenu}
                   isMobmenuOpened={isMobmenuOpened}
                 />,
-                <SavedMovies />,
+                <SavedMovies loggedIn={loggedIn} />,
+                <Footer />,
               ]}
             />
             <Route
@@ -177,9 +169,7 @@ export default function App() {
             <Route path="*" element={<NotFound goBack={goBack} />} />
           </Route>
         </Routes>
-
-        {/* <Footer /> */}
-        {/* <Preloader /> */}
+        <Preloader isOpen={isPreloader} />
         <MobMenu
           onClickMobmenu={onClickMobmenu}
           isMobmenuOpened={isMobmenuOpened}

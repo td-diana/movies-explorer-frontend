@@ -6,29 +6,45 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 function MoviesCardList({ moviesList }) {
   const location = useLocation();
   const [showMovieList, setShowMovieList] = useState([]);
-  const [cardsShowDetails, setCardsShowDetails] = useState({ total: 40 });
+  const [cardsShowDetails, setCardsShowDetails] = useState({
+    total: 7,
+    more: 3,
+  });
 
   // количество фильмов
-   useEffect(() => {
+  useEffect(() => {
     if (moviesList.length) {
       const res = moviesList.filter((item, i) => i < cardsShowDetails.total);
       setShowMovieList(res);
     }
   }, [moviesList, cardsShowDetails.total]);
 
+  // фильмы по кнопке Еще
+  function handleClickMore() {
+    const start = showMovieList.length;
+    const end = start + cardsShowDetails.more;
+    const additional = moviesList.length - start;
+
+    if (additional > 0) {
+      const newCards = moviesList.slice(start, end);
+      setShowMovieList([...showMovieList, ...newCards]);
+    }
+  }
+
   return (
     <section className="movies-card-list">
-      <ul className="movies-card-list__list">        
-        {showMovieList.map((movie) => (          
-          <MoviesCard
-            key={movie.id || movie._id}            
-            movie={movie}                      
-          />          
+      <ul className="movies-card-list__list">
+        {showMovieList.map((movie) => (
+          <MoviesCard key={movie.id || movie._id} movie={movie} />
         ))}
-
       </ul>
-      {location.pathname === "/movies" && (
-        <button className="movies-card-list__more">Ещё</button>
+      {location.pathname === "/movies" && showMovieList.length >= 3 && showMovieList.length < moviesList.length &&(
+        <button
+          className="movies-card-list__more"
+          onClick={handleClickMore}
+        >
+          Ещё
+        </button>
       )}
     </section>
   );
