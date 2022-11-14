@@ -5,7 +5,7 @@ class Api {
     this._baseUrl = baseUrl;
   }
 
-  _onError(res) {
+  _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
@@ -22,7 +22,7 @@ class Api {
         email,
         password,
       }),
-    }).then((res) => this._onError(res));
+    }).then((res) => this._checkResponse(res));
   }
 
   // вход
@@ -31,7 +31,7 @@ class Api {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-    }).then((res) => this._onError(res));
+    }).then((res) => this._checkResponse(res));
   }
 
   // запрос данных пользователя
@@ -40,7 +40,52 @@ class Api {
       headers: {
         authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
-    }).then((res) => this._onError(res));
+    }).then((res) => this._checkResponse(res));
+  }
+
+  // запрос на редактирование данных пользователя
+  updateUser(name, email) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email }),
+    }).then((res) => this._checkResponse(res));
+  }
+
+  // запрос фильмов
+  getSavedMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }).then((res) => this._checkResponse(res));
+  }
+
+  // сохранение фильма
+  addNewMovie(data) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: data.image,
+        trailerLink: data.trailerLink,
+        thumbnail: data.thumbnail,
+        movieId: data.id,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+      }),
+    }).then((res) => this._checkResponse(res));
   }
 }
 

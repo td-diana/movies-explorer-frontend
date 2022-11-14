@@ -3,12 +3,14 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./Profile.css";
 import FormValidation from "../../validation/formValidation";
 
-function Profile({ handleLogOut }) {
+
+function Profile({ handleLogOut, handleProfile }) {
   const { handleChange, resetForm, errors, values } = FormValidation();
   const currentUser = useContext(CurrentUserContext);
 
   function handleSubmit(e) {
-    e.preventDefault();    
+    e.preventDefault();   
+    handleProfile(values) 
   }
 
   useEffect(() => {

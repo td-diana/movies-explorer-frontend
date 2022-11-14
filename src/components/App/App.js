@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import mainApi from "../../utils/MainApi";
-import { Route, Routes } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
+import mainApi from "../../utils/MainApi";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -13,15 +12,33 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
 import MobMenu from "../MobMenu/MobMenu";
-// import Preloader from "../Preloader/Preloader";
 import ProtectedRoute from "../../utils/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+// import Preloader from "../Preloader/Preloader";
 
 export default function App() {
-  const [isMobmenuOpened, setMobmenuOpened] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isMobmenuOpened, setMobmenuOpened] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+
+  // проверка токена и авторизация пользователя
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      mainApi
+        .getUserInfo()
+        .then((data) => {
+          if (data) {
+            setLoggedIn(true);
+            setCurrentUser(data);
+            navigate(location.pathname);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
 
   // получение информации о пользователе
   useEffect(() => {
@@ -77,6 +94,16 @@ export default function App() {
     navigate("/");
   }
 
+  // редактирование данных пользователя
+  function handleProfile({ name, email }) {
+    mainApi
+      .updateUser(name, email)
+      .then((newUserData) => {
+        setCurrentUser(newUserData);
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="app">
       <CurrentUserContext.Provider value={currentUser}>
@@ -114,10 +141,14 @@ export default function App() {
                   onClickMobmenu={onClickMobmenu}
                   isMobmenuOpened={isMobmenuOpened}
                 />,
-                <Movies />,
+
+                <Movies                  
+                  loggedIn={loggedIn}                               
+                />,
                 <Footer />,
               ]}
             />
+            
             <Route
               path="/saved-movies"
               element={[
@@ -137,7 +168,10 @@ export default function App() {
                   onClickMobmenu={onClickMobmenu}
                   isMobmenuOpened={isMobmenuOpened}
                 />,
-                <Profile handleLogOut={handleLogOut} />,
+                <Profile
+                  handleLogOut={handleLogOut}
+                  handleProfile={handleProfile}
+                />,
               ]}
             />
             <Route path="*" element={<NotFound goBack={goBack} />} />

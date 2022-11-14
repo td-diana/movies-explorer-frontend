@@ -23,5 +23,5 @@ export default function FormValidation() {
     [setValues, setErrors, setIsValid]
   );
 
-  return { values, errors, isValid, handleChange, resetForm, setValues };
+  return { values, errors, isValid, handleChange, resetForm, setValues, setIsValid };
 }
