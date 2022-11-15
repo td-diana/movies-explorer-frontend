@@ -1,6 +1,6 @@
+import "./Login.css";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import "./Login.css";
 import logo from "../../images/logo-movies-explorer-blue.svg";
 import FormValidation from "../../validation/formValidation";
 

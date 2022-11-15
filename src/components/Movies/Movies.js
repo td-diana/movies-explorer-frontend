@@ -1,11 +1,13 @@
 import "./Movies.css";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import moviesApi from "../../utils/MoviesApi";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // import Preloader from "../Preloader/Preloader";
 
 function Movies({ setIsPreloader }) {
+  const currentUser = useContext(CurrentUserContext);
   const [isAllMovies, setAllMovies] = useState([]); // фильмы с сервера
   const [initialMovies, setInitialMovies] = useState([]); // фильмы с запроса
   const [filteredMovies, setFilteredMovies] = useState([]); // фильмы отфильтрованные
@@ -45,10 +47,16 @@ function Movies({ setIsPreloader }) {
     setFilteredMovies(
       shortMoviesCheckbox ? filterShortMovies(moviesList) : moviesList
     );
+    localStorage.setItem(
+      `${currentUser.email} - movies`,
+      JSON.stringify(moviesList)
+    );
   }
 
   // поиск по запросу к серверу
   function handleSearchSubmit(inputValue) {
+    localStorage.setItem(`${currentUser.email} - movieSearch`, inputValue);
+    localStorage.setItem(`${currentUser.email} - shortMovies`, shortMovies);
     if (isAllMovies.length === 0) {
       setIsPreloader(true);
       moviesApi
@@ -76,7 +84,34 @@ function Movies({ setIsPreloader }) {
     } else {
       setFilteredMovies(initialMovies);
     }
+    localStorage.setItem(`${currentUser.email} - shortMovies`, !shortMovies);
   }
+
+  // фильмы из localStorage
+  useEffect(() => {
+    if (localStorage.getItem(`${currentUser.email} - movies`)) {
+      const movies = JSON.parse(
+        localStorage.getItem(`${currentUser.email} - movies`)
+      );
+      setInitialMovies(movies);
+      if (
+        localStorage.getItem(`${currentUser.email} - shortMovies`) === "true"
+      ) {
+        setFilteredMovies(filterShortMovies(movies));
+      } else {
+        setFilteredMovies(movies);
+      }
+    }
+  }, [currentUser]);
+
+   // проверка чекбокса в localStorage
+   useEffect(() => {
+    if (localStorage.getItem(`${currentUser.email} - shortMovies`) === 'true') {
+      setShortMovies(true);
+    } else {
+      setShortMovies(false);
+    }
+  }, [currentUser]);
 
   return (
     <main className="movies">
