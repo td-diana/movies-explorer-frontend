@@ -2,6 +2,8 @@ import "./MoviesCardList.css";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import useScreenWidth from "../../utils/useScreenWidth";
+import { deviceParams } from "../../utils/constants.js";
 
 function MoviesCardList({
   moviesList,
@@ -12,9 +14,24 @@ function MoviesCardList({
   const location = useLocation();
   const [showMovieList, setShowMovieList] = useState([]);
   const [cardsShowDetails, setCardsShowDetails] = useState({
-    total: 7,
+    total: 9,
     more: 3,
   });
+  const [isMount, setIsMount] = useState(true);
+  const screenWidth = useScreenWidth();
+  const { desktop, tablet, mobile } = deviceParams;
+
+  // количество фильмов при разной ширине экрана
+  useEffect(() => {
+    if (screenWidth > desktop.width) {
+      setCardsShowDetails(desktop.cards);
+    } else if (screenWidth <= desktop.width && screenWidth > mobile.width) {
+      setCardsShowDetails(tablet.cards);
+    } else {
+      setCardsShowDetails(mobile.cards);
+    }
+    return () => setIsMount(false);
+  }, [screenWidth, isMount, desktop, tablet, mobile]);
 
   // количество фильмов
   useEffect(() => {
@@ -52,7 +69,6 @@ function MoviesCardList({
             saved={comparisonSavedMovie(savedMoviesList, movie)}
             onSaveClick={onSaveClick}
             onDeleteClick={onDeleteClick}
-            
           />
         ))}
       </ul>
