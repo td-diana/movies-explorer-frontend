@@ -87,6 +87,16 @@ class Api {
       }),
     }).then((res) => this._checkResponse(res));
   }
+
+  // удаление фильма
+  deleteMovie(data) {
+    return fetch(`${this._baseUrl}/movies/${data}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }).then((res) => this._checkResponse(res));
+  }
 }
 
 const mainApi = new Api({

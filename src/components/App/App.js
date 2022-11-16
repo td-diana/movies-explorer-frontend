@@ -23,6 +23,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isPreloader, setIsPreloader] = useState(false);
+  const [savedMoviesList, setSavedMoviesList] = useState([]);
 
   // проверка токена и авторизация пользователя
   useEffect(() => {
@@ -105,6 +106,49 @@ export default function App() {
       .catch((err) => console.log(err));
   }
 
+  // cохранение фильма
+  function handleSaveMovie(movie) {
+    mainApi
+      .addNewMovie(movie)
+      .then((newMovie) => setSavedMoviesList([newMovie, ...savedMoviesList]))
+      .catch((err) => console.log(err));
+  }
+
+  // получение сохраненных фильмов
+  useEffect(() => {
+    if (loggedIn && currentUser) {
+      mainApi
+        .getSavedMovies()
+        .then((data) => {
+          const UserMoviesList = data.filter(
+            (m) => m.owner === currentUser._id
+          );
+          setSavedMoviesList(UserMoviesList);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [currentUser, loggedIn]);
+
+  // удаление фильма
+  function handleDeleteMovie(movie) {
+    const savedMovie = savedMoviesList.find(
+      (item) => item.movieId === movie.id || item.movieId === movie.movieId
+    );
+    mainApi
+      .deleteMovie(savedMovie._id)
+      .then(() => {
+        const newMoviesList = savedMoviesList.filter((m) => {
+          if (movie.id === m.movieId || movie.movieId === m.movieId) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+        setSavedMoviesList(newMoviesList);
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="app">
       <CurrentUserContext.Provider value={currentUser}>
@@ -135,11 +179,16 @@ export default function App() {
                   onClickMobmenu={onClickMobmenu}
                   isMobmenuOpened={isMobmenuOpened}
                 />,
-                <Movies loggedIn={loggedIn} setIsPreloader={setIsPreloader} />,
+                <Movies
+                  loggedIn={loggedIn}
+                  setIsPreloader={setIsPreloader}
+                  savedMoviesList={savedMoviesList}
+                  onSaveClick={handleSaveMovie}
+                  onDeleteClick={handleDeleteMovie}
+                />,
                 <Footer />,
               ]}
             />
-
             <Route
               path="/saved-movies"
               element={[
@@ -148,7 +197,11 @@ export default function App() {
                   onClickMobmenu={onClickMobmenu}
                   isMobmenuOpened={isMobmenuOpened}
                 />,
-                <SavedMovies loggedIn={loggedIn} />,
+                <SavedMovies
+                  loggedIn={loggedIn}
+                  savedMoviesList={savedMoviesList}
+                  onDeleteClick={handleDeleteMovie}
+                />,
                 <Footer />,
               ]}
             />

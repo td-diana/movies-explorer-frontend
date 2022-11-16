@@ -6,7 +6,12 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // import Preloader from "../Preloader/Preloader";
 
-function Movies({ setIsPreloader }) {
+function Movies({
+  setIsPreloader,
+  onSaveClick,
+  onDeleteClick,
+  savedMoviesList,
+}) {
   const currentUser = useContext(CurrentUserContext);
   const [isAllMovies, setAllMovies] = useState([]); // фильмы с сервера
   const [initialMovies, setInitialMovies] = useState([]); // фильмы с запроса
@@ -104,9 +109,9 @@ function Movies({ setIsPreloader }) {
     }
   }, [currentUser]);
 
-   // проверка чекбокса в localStorage
-   useEffect(() => {
-    if (localStorage.getItem(`${currentUser.email} - shortMovies`) === 'true') {
+  // проверка чекбокса в localStorage
+  useEffect(() => {
+    if (localStorage.getItem(`${currentUser.email} - shortMovies`) === "true") {
       setShortMovies(true);
     } else {
       setShortMovies(false);
@@ -120,7 +125,12 @@ function Movies({ setIsPreloader }) {
         handleShortFilms={handleShortFilms}
         shortMovies={shortMovies}
       />
-      <MoviesCardList moviesList={filteredMovies} />
+      <MoviesCardList
+        moviesList={filteredMovies}
+        onSaveClick={onSaveClick}
+        onDeleteClick={onDeleteClick}
+        savedMoviesList={savedMoviesList}
+      />
     </main>
   );
 }

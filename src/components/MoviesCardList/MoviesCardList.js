@@ -3,7 +3,12 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({ moviesList }) {
+function MoviesCardList({
+  moviesList,
+  savedMoviesList,
+  onSaveClick,
+  onDeleteClick,
+}) {
   const location = useLocation();
   const [showMovieList, setShowMovieList] = useState([]);
   const [cardsShowDetails, setCardsShowDetails] = useState({
@@ -31,21 +36,33 @@ function MoviesCardList({ moviesList }) {
     }
   }
 
+  function comparisonSavedMovie(arr, movie) {
+    return arr.find((item) => {
+      return item.movieId === (movie.id || movie.movieId);
+    });
+  }
+
   return (
     <section className="movies-card-list">
       <ul className="movies-card-list__list">
         {showMovieList.map((movie) => (
-          <MoviesCard key={movie.id || movie._id} movie={movie} />
+          <MoviesCard
+            key={movie.id || movie._id}
+            movie={movie}
+            saved={comparisonSavedMovie(savedMoviesList, movie)}
+            onSaveClick={onSaveClick}
+            onDeleteClick={onDeleteClick}
+            
+          />
         ))}
       </ul>
-      {location.pathname === "/movies" && showMovieList.length >= 3 && showMovieList.length < moviesList.length &&(
-        <button
-          className="movies-card-list__more"
-          onClick={handleClickMore}
-        >
-          Ещё
-        </button>
-      )}
+      {location.pathname === "/movies" &&
+        showMovieList.length >= 3 &&
+        showMovieList.length < moviesList.length && (
+          <button className="movies-card-list__more" onClick={handleClickMore}>
+            Ещё
+          </button>
+        )}
     </section>
   );
 }

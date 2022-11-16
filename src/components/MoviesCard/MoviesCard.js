@@ -1,13 +1,23 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+// import { useState } from "react";
 import "./MoviesCard.css";
+import { useLocation } from "react-router-dom";
 
-function MoviesCard({ movie }) {
-  const [isCardSaved, setIsCardSaved] = useState(false);
+function MoviesCard({ movie, saved, onSaveClick, onDeleteClick }) {
+  // const [isCardSaved, setIsCardSaved] = useState(false);
   const location = useLocation();
 
-  function handleOnClick() {
-    setIsCardSaved(!isCardSaved);
+  // function handleOnClick() {
+  //   setIsCardSaved(!isCardSaved);
+  // }
+
+   // сохранение фильма
+   function handleSaveClick() { 
+    onSaveClick(movie);
+  }
+
+   // удаление фильма
+   function handleDeleteClick() {
+    onDeleteClick(movie);
   }
 
   function transformDuration(duration) {
@@ -33,15 +43,16 @@ function MoviesCard({ movie }) {
           <button
             type="button"
             className={`movies-card__button movies-card__button_${
-              !isCardSaved ? "save" : "save-active"
+              saved ? "save-active" : "save"
             }`}
-            onClick={handleOnClick}
+            onClick={saved ? handleDeleteClick : handleSaveClick}
           ></button>
         )}
         {location.pathname === "/saved-movies" && (
           <button
             type="button"
             className="movies-card__button movies-card__button_unsave"
+            onClick={handleDeleteClick}
           ></button>
         )}
       </div>
