@@ -15,6 +15,7 @@ import MobMenu from "../MobMenu/MobMenu";
 import ProtectedRoute from "../../utils/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Preloader from "../Preloader/Preloader";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 export default function App() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isPreloader, setIsPreloader] = useState(false);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
+  const [isInfoTooltip, setInfoTooltip] = useState({ isOpen: false });
 
   // проверка токена и авторизация пользователя
   useEffect(() => {
@@ -58,6 +60,10 @@ export default function App() {
 
   function closeMobmenu() {
     setMobmenuOpened(false);
+  }
+  
+  function closeInfoTooltip() {
+    setInfoTooltip(false);
   }
 
   function goBack() {
@@ -185,6 +191,7 @@ export default function App() {
                   savedMoviesList={savedMoviesList}
                   onSaveClick={handleSaveMovie}
                   onDeleteClick={handleDeleteMovie}
+                  setInfoTooltip={setInfoTooltip}
                 />,
                 <Footer />,
               ]}
@@ -228,6 +235,7 @@ export default function App() {
           isMobmenuOpened={isMobmenuOpened}
           closeMobmenu={closeMobmenu}
         />
+        <InfoTooltip isOpen={isInfoTooltip} onClose={closeInfoTooltip} />
       </CurrentUserContext.Provider>
     </div>
   );

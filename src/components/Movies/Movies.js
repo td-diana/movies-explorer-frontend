@@ -11,13 +11,14 @@ function Movies({
   onSaveClick,
   onDeleteClick,
   savedMoviesList,
+  setInfoTooltip,
 }) {
   const currentUser = useContext(CurrentUserContext);
   const [isAllMovies, setAllMovies] = useState([]); // фильмы с сервера
   const [initialMovies, setInitialMovies] = useState([]); // фильмы с запроса
   const [filteredMovies, setFilteredMovies] = useState([]); // фильмы отфильтрованные
   const [shortMovies, setShortMovies] = useState(false); // состояние короткометражек
-  // const [isPreloader, setIsPreloader] = useState(false);
+  const [hideMovies, setHideMovies] = useState(false);
 
   // изображения с сервера
   function convertMovies(movies) {
@@ -48,6 +49,12 @@ function Movies({
   // поиск по массиву
   function handleFilteredMovies(movies, userQuery, shortMoviesCheckbox) {
     const moviesList = filterMovies(movies, userQuery, shortMoviesCheckbox);
+    if (moviesList.length === 0) {
+      setInfoTooltip({ isOpen: true });
+      setHideMovies(true);
+    } else {
+      setHideMovies(false);
+    }
     setInitialMovies(moviesList);
     setFilteredMovies(
       shortMoviesCheckbox ? filterShortMovies(moviesList) : moviesList
@@ -70,6 +77,7 @@ function Movies({
           setAllMovies(movies);
           handleFilteredMovies(convertMovies(movies), inputValue, shortMovies);
         })
+
         .finally(() => setIsPreloader(false));
     } else {
       handleFilteredMovies(isAllMovies, inputValue, shortMovies);
@@ -125,12 +133,14 @@ function Movies({
         handleShortFilms={handleShortFilms}
         shortMovies={shortMovies}
       />
-      <MoviesCardList
-        moviesList={filteredMovies}
-        onSaveClick={onSaveClick}
-        onDeleteClick={onDeleteClick}
-        savedMoviesList={savedMoviesList}
-      />
+      {!hideMovies && (
+        <MoviesCardList
+          moviesList={filteredMovies}
+          onSaveClick={onSaveClick}
+          onDeleteClick={onDeleteClick}
+          savedMoviesList={savedMoviesList}
+        />
+      )}
     </main>
   );
 }
