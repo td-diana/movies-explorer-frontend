@@ -25,7 +25,11 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isPreloader, setIsPreloader] = useState(false);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
-  const [isInfoTooltip, setInfoTooltip] = useState({ isOpen: false });
+  const [isInfoTooltip, setInfoTooltip] = useState({
+    isOpen: false,
+    text: "",
+    isSuccess: true
+  });
 
   // проверка токена и авторизация пользователя
   useEffect(() => {
@@ -40,8 +44,15 @@ export default function App() {
             navigate(location.pathname);
           }
         })
-        .catch((err) => console.log(err));
+        .catch(err =>
+          setInfoTooltip({
+            isOpen: true,
+            successful: false,
+            text: err,
+          })
+        )
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // получение информации о пользователе
@@ -50,7 +61,13 @@ export default function App() {
       mainApi
         .getUserInfo()
         .then((res) => setCurrentUser(res))
-        .catch((err) => console.log(err));
+        .catch(err =>
+          setInfoTooltip({
+            isOpen: true,
+            successful: false,
+            text: err,
+          })
+        )
     }
   }, [loggedIn]);
 
@@ -61,7 +78,7 @@ export default function App() {
   function closeMobmenu() {
     setMobmenuOpened(false);
   }
-  
+
   function closeInfoTooltip() {
     setInfoTooltip(false);
   }
@@ -75,10 +92,16 @@ export default function App() {
       .createUser(name, email, password)
       .then((data) => {
         if (data._id) {
-          onLogin({ email, password });
+          onLogin({ email, password });          
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        setInfoTooltip({
+          isOpen: true,
+          isSuccess: false,
+          text: err,
+        })
+      );
   }
 
   function onLogin({ email, password }) {
@@ -89,9 +112,20 @@ export default function App() {
           setLoggedIn(true);
           localStorage.setItem("jwt", jwt.token);
           navigate("/movies");
+          setInfoTooltip({
+            isOpen: true,
+            isSuccess: true,
+            text: "Welcome",
+          });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        setInfoTooltip({
+          isOpen: true,
+          isSuccess: false,
+          text: err,
+        })
+      );
   }
 
   // выход из аккаунта
@@ -109,7 +143,13 @@ export default function App() {
       .then((newUserData) => {
         setCurrentUser(newUserData);
       })
-      .catch((err) => console.log(err));
+      .catch(err =>
+        setInfoTooltip({
+          isOpen: true,
+          isSuccess: false,
+          text: err,
+        })
+      )
   }
 
   // cохранение фильма
@@ -117,7 +157,13 @@ export default function App() {
     mainApi
       .addNewMovie(movie)
       .then((newMovie) => setSavedMoviesList([newMovie, ...savedMoviesList]))
-      .catch((err) => console.log(err));
+      .catch(err =>
+        setInfoTooltip({
+          isOpen: true,
+          isSuccess: false,
+          text: err,
+        })
+      );
   }
 
   // получение сохраненных фильмов
@@ -131,7 +177,13 @@ export default function App() {
           );
           setSavedMoviesList(UserMoviesList);
         })
-        .catch((err) => console.log(err));
+        .catch(err =>
+          setInfoTooltip({
+            isOpen: true,
+            successful: false,
+            text: err,
+          })
+        )
     }
   }, [currentUser, loggedIn]);
 
@@ -152,7 +204,13 @@ export default function App() {
         });
         setSavedMoviesList(newMoviesList);
       })
-      .catch((err) => console.log(err));
+      .catch(err =>
+        setInfoTooltip({
+          isOpen: true,
+          isSuccess: false,
+          text: err,
+        })
+      );
   }
 
   return (

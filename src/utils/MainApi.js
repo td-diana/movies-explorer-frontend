@@ -5,11 +5,9 @@ class Api {
     this._baseUrl = baseUrl;
   }
 
-  _checkResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+  async _checkResponse(res) {
+    const result = await res.json();
+    return res.ok ? result : Promise.reject(result.message);
   }
 
   // регистрация

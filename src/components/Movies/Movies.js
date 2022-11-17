@@ -50,7 +50,11 @@ function Movies({
   function handleFilteredMovies(movies, userQuery, shortMoviesCheckbox) {
     const moviesList = filterMovies(movies, userQuery, shortMoviesCheckbox);
     if (moviesList.length === 0) {
-      setInfoTooltip({ isOpen: true });
+      setInfoTooltip({
+        isOpen: true,
+        text: "Ничего не найдено",
+        isSuccess: false,
+      });
       setHideMovies(true);
     } else {
       setHideMovies(false);
@@ -77,7 +81,13 @@ function Movies({
           setAllMovies(movies);
           handleFilteredMovies(convertMovies(movies), inputValue, shortMovies);
         })
-
+        .catch(() =>
+          setInfoTooltip({
+            isOpen: true,
+            text: "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
+            isSuccess: false
+          })
+        )
         .finally(() => setIsPreloader(false));
     } else {
       handleFilteredMovies(isAllMovies, inputValue, shortMovies);

@@ -5,8 +5,9 @@ class MoviesApi {
     this._baseUrl = baseUrl;
   }
 
-  _checkResponse(res) {
-    return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
+  async _checkResponse(res) {
+    const result = await res.json();
+    return res.ok ? result : Promise.reject(result.message);
   }
 
   getMovies() {
