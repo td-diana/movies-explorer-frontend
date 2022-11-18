@@ -1,33 +1,18 @@
-// import { useState } from "react";
 import "./MoviesCard.css";
 import { useLocation } from "react-router-dom";
+import { transformDuration } from "../../utils/transform";
 
 function MoviesCard({ movie, saved, onSaveClick, onDeleteClick }) {
-  // const [isCardSaved, setIsCardSaved] = useState(false);
   const location = useLocation();
 
-  // function handleOnClick() {
-  //   setIsCardSaved(!isCardSaved);
-  // }
-
-   // сохранение фильма
-   function handleSaveClick() { 
+  // сохранение фильма
+  function handleSaveClick() {
     onSaveClick(movie);
   }
 
-   // удаление фильма
-   function handleDeleteClick() {
+  // удаление фильма
+  function handleDeleteClick() {
     onDeleteClick(movie);
-  }
-
-  function transformDuration(duration) {
-    const hours = Math.trunc(duration / 60);
-    const minutes = duration % 60;
-    if (hours === 0) {
-      return `${minutes}м`;
-    } else {
-      return `${hours}ч ${minutes}м`;
-    }
   }
 
   return (

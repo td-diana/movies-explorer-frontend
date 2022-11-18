@@ -2,7 +2,7 @@ import "./FilterCheckbox.css";
 
 function FilterCheckbox({ handleShortFilms, shortMovies }) {
   return (
-    <div className="filter-checkbox">
+    <label className="filter-checkbox">
       <input
         className="filter-checkbox__checkbox"
         type="checkbox"
@@ -11,7 +11,7 @@ function FilterCheckbox({ handleShortFilms, shortMovies }) {
       />
       <span className="filter-checkbox__tumbler"></span>
       <span className="filter-checkbox__text">Короткометражки</span>
-    </div>
+    </label>
   );
 }
 

@@ -4,7 +4,8 @@ import moviesApi from "../../utils/MoviesApi";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-// import Preloader from "../Preloader/Preloader";
+import { filterShortMovies, filterMovies } from "../../utils/filter";
+import { convertMovies } from "../../utils/transform";
 
 function Movies({
   setIsPreloader,
@@ -19,32 +20,6 @@ function Movies({
   const [filteredMovies, setFilteredMovies] = useState([]); // фильмы отфильтрованные
   const [shortMovies, setShortMovies] = useState(false); // состояние короткометражек
   const [hideMovies, setHideMovies] = useState(false);
-
-  // изображения с сервера
-  function convertMovies(movies) {
-    movies.forEach((movie) => {
-      movie.thumbnail = `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`;
-      movie.image = `https://api.nomoreparties.co${movie.image.url}`;
-    });
-    return movies;
-  }
-
-  // фильтр всех фильмов по запросу
-  function filterMovies(movies, userQuery, shortMoviesCheckbox) {
-    const moviesUserQuery = movies.filter((movie) => {
-      const movieRu = String(movie.nameRU).toLowerCase().trim();
-      const movieEn = String(movie.nameEN).toLowerCase().trim();
-      const userMovie = userQuery.toLowerCase().trim();
-      return (
-        movieRu.indexOf(userMovie) !== -1 || movieEn.indexOf(userMovie) !== -1
-      );
-    });
-    if (shortMoviesCheckbox) {
-      return filterShortMovies(moviesUserQuery);
-    } else {
-      return moviesUserQuery;
-    }
-  }
 
   // поиск по массиву
   function handleFilteredMovies(movies, userQuery, shortMoviesCheckbox) {
@@ -85,18 +60,13 @@ function Movies({
           setInfoTooltip({
             isOpen: true,
             text: "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
-            isSuccess: false
+            isSuccess: false,
           })
         )
         .finally(() => setIsPreloader(false));
     } else {
       handleFilteredMovies(isAllMovies, inputValue, shortMovies);
     }
-  }
-
-  // фильтр короткометражек
-  function filterShortMovies(movies) {
-    return movies.filter((movie) => movie.duration < 40);
   }
 
   // состояние чекбокса

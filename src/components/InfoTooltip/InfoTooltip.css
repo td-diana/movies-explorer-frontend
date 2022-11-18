@@ -70,3 +70,19 @@
 .tooltip__img_success {
   background-image: url(../../images/success.svg);
 }
+
+@media screen and (max-width: 520px) {
+  .tooltip {
+    max-width: 300px;
+    padding: 25px 22px;
+  }
+
+  .tooltip__img {
+    margin: 25px auto 40px;
+  }
+
+  .tooltip__close-button {    
+    top: -38px;
+    right: 0;
+  }
+}

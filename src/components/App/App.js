@@ -28,7 +28,7 @@ export default function App() {
   const [isInfoTooltip, setInfoTooltip] = useState({
     isOpen: false,
     text: "",
-    isSuccess: true
+    isSuccess: true,
   });
 
   // проверка токена и авторизация пользователя
@@ -44,15 +44,15 @@ export default function App() {
             navigate(location.pathname);
           }
         })
-        .catch(err =>
+        .catch((err) =>
           setInfoTooltip({
             isOpen: true,
-            successful: false,
+            isSuccess: false,
             text: err,
           })
-        )
+        );
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // получение информации о пользователе
@@ -61,13 +61,13 @@ export default function App() {
       mainApi
         .getUserInfo()
         .then((res) => setCurrentUser(res))
-        .catch(err =>
+        .catch((err) =>
           setInfoTooltip({
             isOpen: true,
-            successful: false,
+            isSuccess: false,
             text: err,
           })
-        )
+        );
     }
   }, [loggedIn]);
 
@@ -92,7 +92,7 @@ export default function App() {
       .createUser(name, email, password)
       .then((data) => {
         if (data._id) {
-          onLogin({ email, password });          
+          onLogin({ email, password });
         }
       })
       .catch((err) =>
@@ -143,13 +143,13 @@ export default function App() {
       .then((newUserData) => {
         setCurrentUser(newUserData);
       })
-      .catch(err =>
+      .catch((err) =>
         setInfoTooltip({
           isOpen: true,
           isSuccess: false,
           text: err,
         })
-      )
+      );
   }
 
   // cохранение фильма
@@ -157,7 +157,7 @@ export default function App() {
     mainApi
       .addNewMovie(movie)
       .then((newMovie) => setSavedMoviesList([newMovie, ...savedMoviesList]))
-      .catch(err =>
+      .catch((err) =>
         setInfoTooltip({
           isOpen: true,
           isSuccess: false,
@@ -177,13 +177,13 @@ export default function App() {
           );
           setSavedMoviesList(UserMoviesList);
         })
-        .catch(err =>
+        .catch((err) =>
           setInfoTooltip({
             isOpen: true,
-            successful: false,
+            isSuccess: false,
             text: err,
           })
-        )
+        );
     }
   }, [currentUser, loggedIn]);
 
@@ -204,7 +204,7 @@ export default function App() {
         });
         setSavedMoviesList(newMoviesList);
       })
-      .catch(err =>
+      .catch((err) =>
         setInfoTooltip({
           isOpen: true,
           isSuccess: false,
@@ -266,6 +266,7 @@ export default function App() {
                   loggedIn={loggedIn}
                   savedMoviesList={savedMoviesList}
                   onDeleteClick={handleDeleteMovie}
+                  setInfoTooltip={setInfoTooltip}
                 />,
                 <Footer />,
               ]}
