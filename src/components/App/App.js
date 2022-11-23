@@ -1,6 +1,12 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import mainApi from "../../utils/MainApi";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -132,8 +138,13 @@ export default function App() {
   function handleLogOut() {
     setCurrentUser({});
     setLoggedIn(false);
-    localStorage.removeItem("jwt");
+    localStorage.clear();
     navigate("/");
+    setInfoTooltip({
+      isOpen: true,
+      isSuccess: false,
+      text: "Вы вышли из аккаунта",
+    });
   }
 
   // редактирование данных пользователя
@@ -142,6 +153,11 @@ export default function App() {
       .updateUser(name, email)
       .then((newUserData) => {
         setCurrentUser(newUserData);
+        setInfoTooltip({
+          isOpen: true,
+          isSuccess: true,
+          text: "Данные профиля сохранены",
+        });
       })
       .catch((err) =>
         setInfoTooltip({
@@ -157,13 +173,17 @@ export default function App() {
     mainApi
       .addNewMovie(movie)
       .then((newMovie) => setSavedMoviesList([newMovie, ...savedMoviesList]))
-      .catch((err) =>
-        setInfoTooltip({
-          isOpen: true,
-          isSuccess: false,
-          text: err,
-        })
-      );
+      .catch((err) => {
+        if (err.status === 401) {
+          setInfoTooltip({
+            isOpen: true,
+            isSuccess: false,
+            text: err,
+          });
+        } else {
+          handleLogOut();
+        }
+      });
   }
 
   // получение сохраненных фильмов
@@ -177,13 +197,17 @@ export default function App() {
           );
           setSavedMoviesList(UserMoviesList);
         })
-        .catch((err) =>
-          setInfoTooltip({
-            isOpen: true,
-            isSuccess: false,
-            text: err,
-          })
-        );
+        .catch((err) => {
+          if (err.status === 401) {
+            setInfoTooltip({
+              isOpen: true,
+              isSuccess: false,
+              text: err,
+            });
+          } else {
+            handleLogOut();
+          }
+        });
     }
   }, [currentUser, loggedIn]);
 
@@ -204,13 +228,17 @@ export default function App() {
         });
         setSavedMoviesList(newMoviesList);
       })
-      .catch((err) =>
-        setInfoTooltip({
-          isOpen: true,
-          isSuccess: false,
-          text: err,
-        })
-      );
+      .catch((err) => {
+        if (err.status === 401) {
+          setInfoTooltip({
+            isOpen: true,
+            isSuccess: false,
+            text: err,
+          });
+        } else {
+          handleLogOut();
+        }
+      });
   }
 
   return (
@@ -231,9 +259,20 @@ export default function App() {
           />
           <Route
             path="/signup"
-            element={<Register onRegister={onRegister} />}
+            element={
+              !loggedIn ? (
+                <Register onRegister={onRegister} />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
-          <Route path="/signin" element={<Login onLogin={onLogin} />} />
+          <Route
+            path="/signin"
+            element={
+              !loggedIn ? <Login onLogin={onLogin} /> : <Navigate to="/" />
+            }
+          />
           <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
             <Route
               path="/movies"
@@ -285,8 +324,8 @@ export default function App() {
                 />,
               ]}
             />
-            <Route path="*" element={<NotFound goBack={goBack} />} />
           </Route>
+          <Route path="*" element={<NotFound goBack={goBack} />} />
         </Routes>
         <Preloader isOpen={isPreloader} />
         <MobMenu

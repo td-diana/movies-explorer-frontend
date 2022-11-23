@@ -2,8 +2,8 @@ export const deviceParams = {
   desktop: {
     width: 992,
     cards: {
-      total: 9,
-      more: 3,
+      total: 7,
+      more: 7,
     },
   },
   tablet: {

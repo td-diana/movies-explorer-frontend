@@ -30,7 +30,7 @@ function Register({ onRegister }) {
               name="name"
               className="register__input"
               type="text"
-              value={values.name || ''}
+              value={values.name || ""}
               required
               minLength="2"
               maxLength="30"
@@ -44,7 +44,7 @@ function Register({ onRegister }) {
               name="email"
               className="register__input"
               type="email"
-              value={values.email || ''}
+              value={values.email || ""}
               required
               onChange={handleChange}
             />
@@ -57,7 +57,7 @@ function Register({ onRegister }) {
               className="register__input register__input-password"
               onChange={handleChange}
               type="password"
-              value={values.password || ''}
+              value={values.password || ""}
               required
             />
             <span className="register__error">{errors.password || ""}</span>

@@ -14,7 +14,7 @@ function MoviesCardList({
   const location = useLocation();
   const [showMovieList, setShowMovieList] = useState([]);
   const [cardsShowDetails, setCardsShowDetails] = useState({
-    total: 9,
+    total: 7,
     more: 3,
   });
   const [isMount, setIsMount] = useState(true);
@@ -73,7 +73,7 @@ function MoviesCardList({
         ))}
       </ul>
       {location.pathname === "/movies" &&
-        showMovieList.length >= 3 &&
+        showMovieList.length >= 7 &&
         showMovieList.length < moviesList.length && (
           <button className="movies-card-list__more" onClick={handleClickMore}>
             Ещё

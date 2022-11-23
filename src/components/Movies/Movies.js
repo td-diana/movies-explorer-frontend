@@ -15,11 +15,10 @@ function Movies({
   setInfoTooltip,
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const [isAllMovies, setAllMovies] = useState([]); // фильмы с сервера
   const [initialMovies, setInitialMovies] = useState([]); // фильмы с запроса
   const [filteredMovies, setFilteredMovies] = useState([]); // фильмы отфильтрованные
-  const [shortMovies, setShortMovies] = useState(false); // состояние короткометражек
-  const [hideMovies, setHideMovies] = useState(false);
+  const [isShortMovies, setShortMovies] = useState(false); // состояние короткометражек
+  const [hideMovies, setHideMovies] = useState(false); 
 
   // поиск по массиву
   function handleFilteredMovies(movies, userQuery, shortMoviesCheckbox) {
@@ -42,19 +41,44 @@ function Movies({
       `${currentUser.email} - movies`,
       JSON.stringify(moviesList)
     );
+    localStorage.setItem(
+      `${currentUser.email} - allMovies`,
+      JSON.stringify(movies)
+    );
+  }
+
+  function handleShortFilms() {
+    setShortMovies(!isShortMovies);
+    if (!isShortMovies) {
+      if (filterShortMovies(initialMovies).length === 0) {
+        setFilteredMovies(filterShortMovies(initialMovies));
+      } else {
+        setFilteredMovies(filterShortMovies(initialMovies));
+      }
+    } else {
+      setFilteredMovies(initialMovies);
+    }
+    localStorage.setItem(`${currentUser.email} - shortMovies`, !isShortMovies);
   }
 
   // поиск по запросу к серверу
   function handleSearchSubmit(inputValue) {
     localStorage.setItem(`${currentUser.email} - movieSearch`, inputValue);
-    localStorage.setItem(`${currentUser.email} - shortMovies`, shortMovies);
-    if (isAllMovies.length === 0) {
+    localStorage.setItem(`${currentUser.email} - shortMovies`, isShortMovies);
+    if (localStorage.getItem("allMovies")) {      
+      const movies = JSON.parse(localStorage.getItem(`${currentUser.email} - allMovies`));
+      handleFilteredMovies(movies, inputValue, isShortMovies);
+    } 
+    else {      
       setIsPreloader(true);
       moviesApi
         .getMovies()
         .then((movies) => {
-          setAllMovies(movies);
-          handleFilteredMovies(convertMovies(movies), inputValue, shortMovies);
+          handleFilteredMovies(
+            convertMovies(movies),
+            inputValue,
+            isShortMovies
+          );
         })
         .catch(() =>
           setInfoTooltip({
@@ -64,21 +88,17 @@ function Movies({
           })
         )
         .finally(() => setIsPreloader(false));
-    } else {
-      handleFilteredMovies(isAllMovies, inputValue, shortMovies);
     }
   }
 
-  // состояние чекбокса
-  function handleShortFilms() {
-    setShortMovies(!shortMovies);
-    if (!shortMovies) {
-      setFilteredMovies(filterShortMovies(initialMovies));
+  // проверка чекбокса в localStorage
+  useEffect(() => {
+    if (localStorage.getItem(`${currentUser.email} - shortMovies`) === "true") {
+      setShortMovies(true);
     } else {
-      setFilteredMovies(initialMovies);
+      setShortMovies(false);
     }
-    localStorage.setItem(`${currentUser.email} - shortMovies`, !shortMovies);
-  }
+  }, [currentUser]);
 
   // фильмы из localStorage
   useEffect(() => {
@@ -97,21 +117,12 @@ function Movies({
     }
   }, [currentUser]);
 
-  // проверка чекбокса в localStorage
-  useEffect(() => {
-    if (localStorage.getItem(`${currentUser.email} - shortMovies`) === "true") {
-      setShortMovies(true);
-    } else {
-      setShortMovies(false);
-    }
-  }, [currentUser]);
-
   return (
     <main className="movies">
       <SearchForm
         handleSearchSubmit={handleSearchSubmit}
         handleShortFilms={handleShortFilms}
-        shortMovies={shortMovies}
+        isShortMovies={isShortMovies}
       />
       {!hideMovies && (
         <MoviesCardList
@@ -126,3 +137,6 @@ function Movies({
 }
 
 export default Movies;
+
+// Если карточки уже были отображены на странице в блоке результатов, клик по чекбоксу «Короткометражки» приводит к повторной фильтрации результата.
+// Комментарий: Если поиск произвести с включенным чекбоксом, то после отключения чекбокса ничего не меняется, блок результата все так-же показывает только короткометражки

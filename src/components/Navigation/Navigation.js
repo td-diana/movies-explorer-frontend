@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 import "./Navigation.css";
+import { Link, NavLink } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 function Navigation({ loggedIn, onClickMobmenu, isMobmenuOpened }) {
   const isMobile = useMediaQuery({ query: `(max-width: 768px)` });
@@ -12,13 +12,6 @@ function Navigation({ loggedIn, onClickMobmenu, isMobmenuOpened }) {
   return (
     <>
       {!loggedIn ? (
-        // isMobile ? (
-        //   <button
-        //     type="button"
-        //     className="navigation__mob-menu-button"
-        //     onClick={handleOnClickMobmenu}
-        //   />
-        // ) : (
         <nav className="navigation">
           <ul className="navigation__list">
             <li>
@@ -46,23 +39,23 @@ function Navigation({ loggedIn, onClickMobmenu, isMobmenuOpened }) {
         <nav className="navigation">
           <ul className="navigation__list navigation__list-loggedin">
             <li className="navigation__item">
-              <Link to="/movies" className="navigation__link">
+              <NavLink to="/movies" className="navigation__link">
                 Фильмы
-              </Link>
+              </NavLink>
             </li>
             <li className="navigation__item">
-              <Link to="/saved-movies" className="navigation__link">
+              <NavLink to="/saved-movies" className="navigation__link">
                 Сохранённые фильмы
-              </Link>
+              </NavLink>
             </li>
           </ul>
           <div className="navigation__item">
-            <Link
+            <NavLink
               to="/profile"
               className="navigation__link navigation__link-account"
             >
               Аккаунт
-            </Link>
+            </NavLink>
           </div>
         </nav>
       )}

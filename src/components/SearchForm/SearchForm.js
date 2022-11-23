@@ -1,18 +1,18 @@
 import "./SearchForm.css";
 import { useState, useEffect, useContext } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import FormValidation from "../../validation/formValidation";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function SearchForm({ handleSearchSubmit, shortMovies, handleShortFilms }) {
+function SearchForm({ handleSearchSubmit, isShortMovies, handleShortFilms }) {
   const currentUser = useContext(CurrentUserContext);
   const { handleChange, isValid, values, setIsValid } = FormValidation();
   const [errorQuery, setErrorQuery] = useState("");
   const location = useLocation();
 
   function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault();   
     isValid
       ? handleSearchSubmit(values.search)
       : setErrorQuery("Нужно ввести ключевое слово");
@@ -22,11 +22,15 @@ function SearchForm({ handleSearchSubmit, shortMovies, handleShortFilms }) {
     setErrorQuery("");
   }, [isValid]);
 
-  
   //инпут для localStorage
   useEffect(() => {
-    if (location.pathname === '/movies' && localStorage.getItem(`${currentUser.email} - movieSearch`)) {
-      const searchValue = localStorage.getItem(`${currentUser.email} - movieSearch`);
+    if (
+      location.pathname === "/movies" &&
+      localStorage.getItem(`${currentUser.email} - movieSearch`)
+    ) {
+      const searchValue = localStorage.getItem(
+        `${currentUser.email} - movieSearch`
+      );
       values.search = searchValue;
       setIsValid(true);
     }
@@ -52,7 +56,10 @@ function SearchForm({ handleSearchSubmit, shortMovies, handleShortFilms }) {
         <span className="search-form__error">{errorQuery}</span>
         <button className="search-form__button" type="submit"></button>
       </form>
-      <FilterCheckbox shortMovies={shortMovies} handleShortFilms={handleShortFilms} />
+      <FilterCheckbox
+        isShortMovies={isShortMovies}
+        handleShortFilms={handleShortFilms}
+      />
     </section>
   );
 }
