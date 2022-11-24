@@ -18,7 +18,7 @@ function Movies({
   const [initialMovies, setInitialMovies] = useState([]); // фильмы с запроса
   const [filteredMovies, setFilteredMovies] = useState([]); // фильмы отфильтрованные
   const [isShortMovies, setShortMovies] = useState(false); // состояние короткометражек
-  const [hideMovies, setHideMovies] = useState(false); 
+  const [hideMovies, setHideMovies] = useState(false);
 
   // поиск по массиву
   function handleFilteredMovies(movies, userQuery, shortMoviesCheckbox) {
@@ -52,11 +52,14 @@ function Movies({
     if (!isShortMovies) {
       if (filterShortMovies(initialMovies).length === 0) {
         setFilteredMovies(filterShortMovies(initialMovies));
+        setHideMovies(true);
       } else {
         setFilteredMovies(filterShortMovies(initialMovies));
+        setHideMovies(false);
       }
     } else {
       setFilteredMovies(initialMovies);
+      setHideMovies(initialMovies.length === 0 ? true : false);
     }
     localStorage.setItem(`${currentUser.email} - shortMovies`, !isShortMovies);
   }
@@ -65,11 +68,12 @@ function Movies({
   function handleSearchSubmit(inputValue) {
     localStorage.setItem(`${currentUser.email} - movieSearch`, inputValue);
     localStorage.setItem(`${currentUser.email} - shortMovies`, isShortMovies);
-    if (localStorage.getItem("allMovies")) {      
-      const movies = JSON.parse(localStorage.getItem(`${currentUser.email} - allMovies`));
+    if (localStorage.getItem(`${currentUser.email} - allMovies`)) {
+      const movies = JSON.parse(
+        localStorage.getItem(`${currentUser.email} - allMovies`)
+      );
       handleFilteredMovies(movies, inputValue, isShortMovies);
-    } 
-    else {      
+    } else {
       setIsPreloader(true);
       moviesApi
         .getMovies()
@@ -93,7 +97,7 @@ function Movies({
 
   // проверка чекбокса в localStorage
   useEffect(() => {
-    if (localStorage.getItem(`${currentUser.email} - shortMovies`) === "true") {
+    if (localStorage.getItem(`${currentUser.email} - shortMovies`)) {
       setShortMovies(true);
     } else {
       setShortMovies(false);
@@ -107,9 +111,7 @@ function Movies({
         localStorage.getItem(`${currentUser.email} - movies`)
       );
       setInitialMovies(movies);
-      if (
-        localStorage.getItem(`${currentUser.email} - shortMovies`) === "true"
-      ) {
+      if (localStorage.getItem(`${currentUser.email} - shortMovies`)) {
         setFilteredMovies(filterShortMovies(movies));
       } else {
         setFilteredMovies(movies);
