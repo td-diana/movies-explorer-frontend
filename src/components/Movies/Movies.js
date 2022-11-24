@@ -97,7 +97,7 @@ function Movies({
 
   // проверка чекбокса в localStorage
   useEffect(() => {
-    if (localStorage.getItem(`${currentUser.email} - shortMovies`)) {
+    if (localStorage.getItem(`${currentUser.email} - shortMovies`) === 'true') {
       setShortMovies(true);
     } else {
       setShortMovies(false);
@@ -111,7 +111,7 @@ function Movies({
         localStorage.getItem(`${currentUser.email} - movies`)
       );
       setInitialMovies(movies);
-      if (localStorage.getItem(`${currentUser.email} - shortMovies`)) {
+      if (localStorage.getItem(`${currentUser.email} - shortMovies`) === 'true') {
         setFilteredMovies(filterShortMovies(movies));
       } else {
         setFilteredMovies(movies);
