@@ -93,6 +93,15 @@
   opacity: 0.8;
 }
 
+.profile__button-edit_disabled {
+  color: #b8b3b3;
+  cursor: default;
+}
+
+.profile__button-edit_disabled:hover {
+  opacity: 1;
+}
+
 .profile__button-exit {
   border: none;
   font-weight: 500;
@@ -110,7 +119,7 @@
 
 @media screen and (max-width: 768px) {
   .profile {
-    padding-top: 236px;
+    justify-content: center;
   }
 
   .profile__form {

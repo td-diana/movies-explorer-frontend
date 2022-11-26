@@ -4,11 +4,12 @@ import "./Register.css";
 import logo from "../../images/logo-movies-explorer-blue.svg";
 import FormValidation from "../../validation/formValidation";
 
-function Register() {
-  const { handleChange, resetForm, errors, isValid } = FormValidation();
+function Register({ onRegister }) {
+  const { handleChange, resetForm, errors, isValid, values } = FormValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
+    onRegister(values);
   }
 
   useEffect(() => {
@@ -29,6 +30,7 @@ function Register() {
               name="name"
               className="register__input"
               type="text"
+              value={values.name || ""}
               required
               minLength="2"
               maxLength="30"
@@ -42,6 +44,7 @@ function Register() {
               name="email"
               className="register__input"
               type="email"
+              value={values.email || ""}
               required
               onChange={handleChange}
             />
@@ -54,6 +57,7 @@ function Register() {
               className="register__input register__input-password"
               onChange={handleChange}
               type="password"
+              value={values.password || ""}
               required
             />
             <span className="register__error">{errors.password || ""}</span>

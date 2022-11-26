@@ -1,17 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 import logo from "../../images/logo-movies-explorer-blue.svg";
 import Navigation from "../Navigation/Navigation";
 
-function Header({ LoggedIn, theme, onClickMobmenu, isMobmenuOpened }) {
+function Header({ loggedIn, onClickMobmenu, isMobmenuOpened }) {
+  const location = useLocation();
   return (
-    <header className={`header header_theme_${theme ? "logged" : "nologged"}`}>
+    <header
+      className={`header header_theme_${
+        location.pathname === "/" ? "grey" : "white"
+      }`}
+    >
       <div className="header__container">
         <Link to="/" className="header__logo">
           <img src={logo} alt="логотип" />
         </Link>
         <Navigation
-          LoggedIn={LoggedIn}
+          loggedIn={loggedIn}
           onClickMobmenu={onClickMobmenu}
           isMobmenuOpened={isMobmenuOpened}
         />
